@@ -755,6 +755,55 @@ button,a{-webkit-tap-highlight-color:transparent}
 .ns-E .ns{border:1.5px solid var(--c);border-color:color-mix(in srgb,var(--c) 38%,#fff);box-shadow:none;margin:18px 0 0}
 .ns-E .ns{overflow:hidden}
 .tile-over{position:absolute;left:49%;bottom:42.5%;height:25%;transform:translateX(-50%);filter:drop-shadow(0 6px 8px rgba(0,0,0,.18));z-index:0}.theme.photo .theme-t{z-index:1}
+/* ================= Style premium ================= */
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/fraunces-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/fraunces-latin-500-normal.woff2) format("woff2")}
+
+.pm{--bg:#F7F4EF;--card:#FFFFFF;--ink:#1E1C1A;--muted:#8A847C;--line:#ECE6DD;--brand:#33463C;--brand-soft:#E9EEE9;--shadow:none}
+.pm body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);letter-spacing:-.005em}
+.pm .phone,.pm #screen{background:var(--bg)}
+.pm-top{display:flex;align-items:center;justify-content:space-between;margin:4px 0 26px}
+.pm-logo{font-family:"Fraunces",Georgia,serif;font-size:24px;font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+.pm-icbtn{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--ink)}.pm-icbtn svg{width:21px;height:21px}.pm-icbtn .dot{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--brand)}
+.pm-h1{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:36px;line-height:1.08;letter-spacing:-.025em;color:var(--ink);margin:0 0 8px}
+.pm-intro{color:var(--muted);font-size:15px;margin:0 0 8px}
+.pm-back{width:40px;height:40px;margin-left:-8px;display:grid;place-items:center;color:var(--ink)}
+.pm-label{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:34px 0 12px}
+.pm-focus{position:relative;display:block;width:100%;text-align:left;background:var(--brand);color:#F4F1EA;border-radius:22px;padding:22px 56px 22px 22px;margin-top:22px}
+.pm-focus small{display:block;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-bottom:8px}
+.pm-focus b{display:block;font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:23px;letter-spacing:-.01em;margin-bottom:4px}
+.pm-focus span{font-size:14px;opacity:.8}.pm-focus>i{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.3);display:grid;place-items:center}
+.pm-bar{height:3px;border-radius:3px;background:rgba(255,255,255,.2);margin-top:14px;overflow:hidden}.pm-bar i{display:block;height:100%;background:#F4F1EA;border-radius:3px}
+.pm-list{background:var(--card);border-radius:20px;border:1px solid var(--line);overflow:hidden}
+.pm-row{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:16px 16px;color:var(--ink)}
+.pm-row+.pm-row{border-top:1px solid var(--line)}
+.pm-ic{width:40px;height:40px;border-radius:12px;background:var(--bg);display:grid;place-items:center;color:var(--brand);flex:none}
+.pm-tx{flex:1;min-width:0}.pm-tx b{display:block;font-weight:600;font-size:15.5px}.pm-tx small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.pm-chev{color:#B9B2A8;display:grid}.pm-pill{font-size:12px;font-weight:600;color:var(--brand);background:var(--brand-soft);border-radius:99px;padding:3px 9px;margin-right:2px}
+.pm-link{display:block;margin:22px auto 8px;color:var(--ink);font-size:14px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:#C9C1B6}
+.pm-scroll{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px 4px;scroll-snap-type:x mandatory}.pm-scroll::-webkit-scrollbar{display:none}
+.pm-prod{flex:0 0 42%;scroll-snap-align:start;text-align:left;color:var(--ink);text-decoration:none}
+.pm-ph{display:grid;place-items:center;aspect-ratio:1;background:#EFEAE3;border-radius:18px;margin-bottom:10px;overflow:hidden}.pm-ph img{max-width:78%;max-height:78%;object-fit:contain}
+.pm-prod b{display:block;font-weight:600;font-size:14px;line-height:1.3}.pm-prod small{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.pm-tips{list-style:none;margin:0;padding:0}.pm-tips li{padding:14px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.5;color:var(--ink)}.pm-tips li:last-child{border-bottom:1px solid var(--line)}
+.pm .ba-row .ba{flex-basis:44%}.pm .ba-row .ba img{border-radius:16px}
+/* barre de navigation */
+.pm .nav{background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 10px 30px -18px rgba(30,28,26,.25)}
+.pm .nav button{color:#9B948A}.pm .nav button.on{background:none;color:var(--ink)}.pm .nav button.on span{font-weight:600}
+.pm .nav button.on::after{content:"";display:block;width:4px;height:4px;border-radius:50%;background:var(--brand);margin:3px auto 0}
+.pm .nav-dot{background:var(--brand)}
+/* éléments communs */
+.pm .card{box-shadow:none;border:1px solid var(--line);border-radius:20px}
+.pm .h-title{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-.02em}
+.pm .univ-hero{background:var(--card)!important;border:1px solid var(--line)}
+.pm .univ-hero .h-title{color:var(--ink)!important}
+.pm .btn{border-radius:14px}
+.pm .tool-tile,.pm .td-list,.pm .td-top{box-shadow:none;border:1px solid var(--line)}
+.pm .td-row.on .td-box{background:var(--brand);border-color:var(--brand)}.pm .td-top{color:var(--brand)}
+.pm .tm-cta{color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:#C9C1B6;font-weight:500}.pm .pm-scroll{scroll-padding-left:20px}
 </style>
 </head>
 <body>
@@ -5702,7 +5751,7 @@ baRow = function(filter){
     const cards = T.map(t => `<button class="ba" onclick="openTemoView('${t.id}')"><img src="${temoImg(t.id,1)}" alt="Avant / après · ${esc(t.label)}" loading="lazy"></button>`).join("");
     h = h ? h.replace('<div class="carousel ba-row">', '<div class="carousel ba-row">' + cards) : `<div class="carousel ba-row">${cards}</div><p class="tiny muted" style="margin-top:6px">${BA_NOTE}</p>`;
   }
-  return h ? h + `<button class="mini-link tm-cta" onclick="openTemo()">📸 Toi aussi, partage ta transformation</button>` : h;
+  return h ? h + `<button class="mini-link tm-cta" onclick="openTemo()">Toi aussi, partage ta transformation</button>` : h;
 };
 function openTemoView(id){
   const t = (DB.temo || []).find(x => x.id === id); if(!t) return; const p = P(t.product);
@@ -5945,6 +5994,111 @@ function nsWrap(h){
 function nsGo(k){ const e = $("ns-" + k), s = $("screen"); if(e && s) s.scrollTo({ top: e.offsetTop - 70, behavior: "smooth" }); }
 const _renderUnivNS = renderUniv;
 renderUniv = function(){ return nsWrap(_renderUnivNS.apply(this, arguments)); };
+</script>
+<script>
+/* =========================================================
+   Style premium : épuré, élégant, une seule couleur de marque
+   ========================================================= */
+document.documentElement.classList.add("pm");
+const LI = (d, w) => `<svg viewBox="0 0 24 24" width="${w || 22}" height="${w || 22}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const PMI = {
+  silhouette: '<path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-3 2-6 5-9z"/><path d="M12 21v-6"/>',
+  beaute: '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>',
+  sommeil: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  lectures: '<path d="M3 5.5C5.5 4 9 4 12 6c3-2 6.5-2 9-.5V19c-2.5-1.5-6-1.5-9 .5-3-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/>',
+  boutique: '<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+  bilan: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+  gestes: '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/>',
+  besoins: '<path d="M12 21a7 7 0 0 0 7-7c0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8a7 7 0 0 0 7 7z"/>',
+  chart: '<path d="M4 19h16"/><path d="M6 15l4-4 3 3 5-6"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  drop: '<path d="M12 3c3.5 4 6 7 6 10a6 6 0 0 1-12 0c0-3 2.5-6 6-10z"/>',
+  search: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
+  hand: '<path d="M8 13V6.5a1.5 1.5 0 0 1 3 0V12M11 11V5a1.5 1.5 0 0 1 3 0v6M14 11V6.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7c-3 0-4.5-1.5-6-4l-1.5-2.5a1.5 1.5 0 0 1 2.5-1.6L8 15"/>',
+  cal: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  bowl: '<path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M9 7c0-1.5 1-2 1-3.5M13 7c0-1.5 1-2 1-3.5"/>',
+  camera: '<path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/>',
+  zap: '<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>',
+  book: '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
+  wind: '<path d="M3 9h11a3 3 0 1 0-3-3M3 15h15a3 3 0 1 1-3 3"/>',
+  dot: '<circle cx="12" cy="12" r="3.5"/>',
+  arrow: '<path d="M9 6l6 6-6 6"/>',
+  bubble: '<path d="M4 5h16v11H9l-5 4z"/>'
+};
+const pmIco = (k, w) => LI(PMI[k] || PMI.dot, w);
+const PM_TOOL_IC = { pquiz:"bilan", todop:"gestes", metabo:"besoins", poids:"chart", routine:"sun", soins:"cal", cure:"drop", assiette:"bowl", cheveux:"search", photosb:"camera", peau:"search", coucher:"sommeil", coucherRit:"sommeil", sjournal:"book", energieJ:"zap", barre:"zap", stress:"wind", vquiz:"bilan" };
+const pmToolIc = (v, act) => PM_TOOL_IC[v] || (/massage|visage/.test(act || "") ? "hand" : /dodo|reveil/.test(act || "") ? "sommeil" : "dot");
+
+/* ---------- Vocabulaire ---------- */
+Object.assign(NEEDS.poids, { name:"Silhouette", intro:"Avancer à ton rythme, sans pression." });
+NEEDS.poids.toolGroups = [["", [
+  ["pquiz","","Mon bilan","1 minute pour savoir par où commencer."],
+  ["todop","","Mes gestes du jour","Quelques habitudes simples, à cocher."],
+  ["metabo","","Mes besoins","Ce dont ton corps a besoin chaque jour."]
+]]];
+if(NEEDS.beaute) NEEDS.beaute.intro = "Peau, cheveux, ongles : les bons gestes.";
+if(NEEDS.forme) Object.assign(NEEDS.forme, { name:"Sommeil", intro:"Mieux dormir, mieux récupérer." });
+
+const PM_UNIV = [
+  ["silhouette", "Silhouette", "Alimentation et bonnes habitudes", "openUniv('poids')"],
+  ["beaute", "Beauté", "Peau, cheveux, ongles", "openUniv('beaute')"],
+  ["sommeil", "Sommeil", "Repos et énergie", "openUniv('forme')"],
+  ["lectures", "Lectures", "Nos guides à télécharger", "nav('ebooks')"],
+  ["boutique", "Boutique", "Les produits JIFU", "nav('boutique')"]
+];
+const pmRow = (ic, t, d, go, right) => `<button class="pm-row" onclick="${go}"><span class="pm-ic">${pmIco(ic)}</span><span class="pm-tx"><b>${t}</b>${d ? `<small>${d}</small>` : ""}</span>${right || `<span class="pm-chev">${LI(PMI.arrow, 18)}</span>`}</button>`;
+
+/* ---------- Accueil ---------- */
+renderHome = function(){
+  const u = me(), unread = (u.inbox || []).filter(m => !m.read).length, hr = nowHour();
+  const hello = hr < 18 ? "Bonjour" : "Bonsoir";
+  let focus;
+  if(!u.pquiz) focus = `<button class="pm-focus" onclick="nav('pquiz')"><small>Pour commencer</small><b>Ton bilan en 1 minute</b><span>Quelques questions, puis un plan qui te ressemble.</span><i>${LI(PMI.arrow, 20)}</i></button>`;
+  else { const s = todoStats(u); focus = `<button class="pm-focus" onclick="nav('todop')"><small>Aujourd'hui</small><b>Tes gestes du jour</b><span>${s.n} sur ${s.tot} · ${s.n === s.tot ? "journée réussie" : "continue comme ça"}</span><div class="pm-bar"><i style="width:${Math.round(s.pct * 100)}%"></i></div><i>${LI(PMI.arrow, 20)}</i></button>`; }
+  return `<div class="pm-top"><div class="pm-logo">MyGlow</div><div class="row" style="gap:6px"><button class="pm-icbtn" onclick="nav('inbox')" aria-label="Messages">${ICONS.bell}${unread ? `<i class="dot"></i>` : ""}</button><button class="av-btn" onclick="nav('moi')" aria-label="Moi">${avatar(u,36,18)}</button></div></div>
+    <h1 class="pm-h1">${hello}${u.prenom ? ",<br>" + esc(u.prenom) : ""}</h1>
+    ${focus}
+    <div class="pm-label">Explorer</div>
+    <div class="pm-list">${PM_UNIV.map(([ic,t,d,go]) => pmRow(ic,t,d,go)).join("")}</div>
+    <button class="pm-link" onclick="nav('resultats')">Voir les résultats de nos clientes</button>`;
+};
+// Les avant/après ont leur propre page, plus de carrousel sur l'accueil
+VX.resultats = function(){
+  const ba = baRow(); return `<button class="pm-back" onclick="goBack()">${ICONS.back}</button><h1 class="pm-h1" style="margin-top:6px">Résultats</h1><p class="pm-intro">Les parcours de nos clientes, partagés avec leur accord.</p>${ba || `<p class="muted">Bientôt ici.</p>`}`;
+};
+
+/* ---------- Pages univers ---------- */
+renderUniv = function(){
+  const u = me(), X = NEEDS[univKey] || NEEDS.poids; const parts = [];
+  const tools = (X.toolGroups ? X.toolGroups.reduce((a, g) => a.concat(g[1]), []) : (X.tools || []));
+  if(tools.length){
+    const extra = v => v === "todop" ? (() => { const s = todoStats(u); return `<span class="pm-pill">${s.n}/${s.tot}</span>`; })() : "";
+    parts.push(`<div class="pm-label">Outils</div><div class="pm-list">${tools.map(([v,ic,l,d,act]) => pmRow(pmToolIc(v, act), l, d, act || `nav('${v}')`, extra(v) ? extra(v) + `<span class="pm-chev">${LI(PMI.arrow, 18)}</span>` : "")).join("")}</div>`);
+  }
+  const ids = univKey === "poids" ? ["pulse","bao"] : (X.products || []);
+  const prods = ids.map(P).filter(p => p && eligible(p, u));
+  let packs = [];
+  if(univKey === "poids" && typeof PW_PACKS !== "undefined") packs = PW_PACKS.map(s => SHOP_PACKS.find(k => k.slug === s)).filter(Boolean).slice(0, 5);
+  else if(typeof SHOP_PACKS !== "undefined") packs = SHOP_PACKS.filter(k => (k.themes || []).includes(univKey === "forme" ? "forme" : univKey)).slice(0, 4);
+  const cards = prods.map(p => `<button class="pm-prod" onclick="openProduct('${p.id}')"><span class="pm-ph">${IMGS[p.id] ? `<img src="${IMGS[p.id]}" alt="" loading="lazy">` : ""}</span><b>${esc(p.name)}</b><small>Découvrir</small></button>`)
+    .concat(packs.map(pk => `<a class="pm-prod" href="${esc(packUrl(pk))}" target="_blank" rel="noopener" onclick="logEvent('order_click','pack:${pk.slug}')"><span class="pm-ph"><img src="${pk.img}" alt="" loading="lazy" onerror="this.style.opacity=0"></span><b>${esc(pk.name)}</b><small>Commander</small></a>`));
+  if(cards.length){ parts.push(`<div class="pm-label">La sélection</div><div class="pm-scroll" id="pwRow" ontouchstart="this._hold=1" ontouchend="setTimeout(()=>this._hold=0,4000)">${cards.join("")}</div>`); setTimeout(() => { if(typeof pwAuto === "function") pwAuto(); }, 300); }
+  const ba = X.ba ? baRow(X.ba) : "";
+  if(ba) parts.push(`<div class="pm-label">Résultats</div>${ba}`);
+  const tips = X.tips ? X.tips().slice(0, 4) : [];
+  if(tips.length) parts.push(`<div class="pm-label">Repères</div><ul class="pm-tips">${tips.map(t => `<li>${esc(t)}</li>`).join("")}</ul>`);
+  const bh = typeof needBooks === "function" ? needBooks(univKey) : "";
+  if(bh) parts.push(`<div class="pm-label">À lire</div>${bh}`);
+  parts.push(`<div class="pm-list" style="margin-top:28px">${pmRow("bubble", "Une question ?", esc(conseillerNom()) + " te répond personnellement.", "contact()")}</div>`);
+  return `<button class="pm-back" onclick="goBack()" aria-label="Retour">${ICONS.back}</button>
+    <h1 class="pm-h1" style="margin-top:6px">${esc(X.name)}</h1><p class="pm-intro">${esc(X.intro || "")}</p>${parts.join("")}
+    <p class="disclaimer">Conseils généraux de bien-être, qui ne remplacent pas l'avis d'un médecin. Les compléments alimentaires ne se substituent pas à une alimentation variée et équilibrée.</p>`;
+};
+
+/* ---------- Titres des outils Silhouette ---------- */
+const _vxTodo = VX.todop, _vxQuiz = VX.pquiz;
+VX.todop = function(){ return _vxTodo().replace("Ma to-do perte de poids", "Mes gestes du jour"); };
+VX.pquiz = function(){ return _vxQuiz().replace("Le quiz perte de poids", "Mon bilan").replace("8 questions rapides pour comprendre ce qui te freine, et repartir avec un plan qui te ressemble.", "Quelques questions pour savoir par où commencer."); };
 </script>
 <script>
 /* =========================================================
