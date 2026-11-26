@@ -711,6 +711,19 @@ button,a{-webkit-tap-highlight-color:transparent}
 .tm-pick.on{border-style:solid;border-color:#fff;box-shadow:var(--shadow)}.tm-pick.on span,.tm-pick.on b{display:none}
 .tm-cta{display:block;margin:8px auto 0;font-weight:600}
 .tm-adm{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}.tm-adm img{width:90px;border-radius:12px;align-self:flex-start}
+/* --- To-do perte de poids --- */
+.tool-grid .tool-tile:last-child:nth-child(odd){grid-column:1/-1}
+.td-top{display:flex;align-items:center;gap:14px;background:var(--card);box-shadow:var(--shadow);border-radius:22px;padding:14px;margin:14px 0 6px;color:#14532D}
+.td-week{display:flex;gap:6px}.td-day{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--muted)}
+.td-day i{width:18px;height:18px;border-radius:50%;background:var(--line)}.td-day.mid i{background:#BFE6CC}.td-day.ok i{background:#1E7A4F}.td-day.now span{font-weight:700;color:inherit}
+.td-list{background:var(--card);box-shadow:var(--shadow);border-radius:20px;overflow:hidden}
+.td-row{display:flex;align-items:center;border-top:1px solid var(--line)}.td-row:first-child{border-top:none}
+.td-chk{flex:1;display:flex;align-items:center;gap:12px;background:none;border:none;padding:14px;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.td-box{width:26px;height:26px;border-radius:9px;border:2px solid #BFD9C8;display:grid;place-items:center;font-weight:800;color:#fff;flex:none;transition:all .2s}
+.td-row.on .td-box{background:#1E7A4F;border-color:#1E7A4F}.td-row.on .td-l{text-decoration:line-through;opacity:.55}
+.td-ic{font-size:20px}.td-l{font-size:15px;font-weight:600}
+.td-del{border:none;background:none;font-size:22px;color:var(--muted);padding:0 14px;cursor:pointer}
+.td-add{display:flex;gap:8px;margin-top:12px}.td-add .inp{margin:0;flex:1}
 </style>
 </head>
 <body>
@@ -5718,6 +5731,122 @@ document.addEventListener("DOMContentLoaded", () => {
   const _apiP = api;
   api = function(path, opts){ if(path === "/signup" && opts && opts.body && !opts.body.ref){ try{ opts.body.ref = localStorage.getItem("mg_ref"); }catch(e){} } return _apiP(path, opts); };
 });
+</script>
+<script>
+/* =========================================================
+   Perte de poids épurée : calcul métabolique, ma to-do du jour, quiz perte de poids
+   ========================================================= */
+NEEDS.poids.intro = "Trois outils simples pour avancer, un jour après l'autre.";
+NEEDS.poids.toolGroups = [["Pour avancer", [
+  ["metabo","🔥","Mon calcul métabolique","Ce qu'il te faut chaque jour."],
+  ["todop","✅","Ma to-do perte de poids","Les bons gestes du jour, à cocher."],
+  ["pquiz","🎯","Le quiz perte de poids","8 questions pour trouver ce qui te freine."]
+]]];
+
+/* ---------- Ma to-do perte de poids ---------- */
+const hasProd = (u, id) => (u.mesProduits || []).some(mp => mp.id === id);
+function todoItems(u){
+  const L = [
+    ["Le matin", [["eau1","💧","Un grand verre d'eau au réveil"],
+      hasProd(u,"pulse") ? ["pulse","☕","Mon Café PULSE"] : ["pdj","🥚","Un petit-déj avec des protéines"]]],
+    ["Dans la journée", [["eau","🚰","1,5 litre d'eau au total"],["leg","🥦","Des légumes à chaque repas"],["marche","🚶‍♀️","30 minutes de marche"],["sucre","🍬","Pas de grignotage sucré"]]],
+    ["Le soir", [hasProd(u,"bao") ? ["bao","🌿","Mon BAO+ avant le repas"] : ["lent","🍽️","Manger lentement, sans écran"],["diner","🥗","Un dîner léger, tôt"],["dodo","😴","Au lit avant 23 h"]]]
+  ];
+  const mine = (u.todoPerso || []).map((t, i) => ["p" + i, "⭐", t]);
+  if(mine.length) L.push(["Mes tâches à moi", mine]);
+  return L;
+}
+const todoDay = (u, d) => ((u.todoP || {})[dkey(d || new Date())] || {});
+function todoStats(u, d){ const all = todoItems(u).reduce((a, g) => a.concat(g[1]), []), t = todoDay(u, d); const n = all.filter(x => t[x[0]]).length; return { n, tot: all.length, pct: all.length ? n / all.length : 0 }; }
+function todoStreak(u){ let s = 0; for(let i = 0; i < 90; i++){ const p = todoStats(u, addDays(new Date(), -i)).pct; if(p >= .8) s++; else if(i > 0) break; } return s; }
+function todoTick(id){
+  const u = me(), k = dkey(new Date()); u.todoP = u.todoP || {}; const t = u.todoP[k] = u.todoP[k] || {};
+  if(t[id]) delete t[id]; else t[id] = 1;
+  const keep = Object.keys(u.todoP).sort().slice(-60); Object.keys(u.todoP).forEach(x => { if(!keep.includes(x)) delete u.todoP[x]; });
+  const s = todoStats(u); if(s.n === s.tot && !t._full){ t._full = 1; logEvent("todo_full", ""); celebrate(); toast("Journée parfaite ! 🎉"); } else save();
+  renderClient();
+}
+function todoAdd(){ const i = $("tdNew"), v = (i && i.value || "").trim(); if(!v) return; const u = me(); u.todoPerso = (u.todoPerso || []).concat([v.slice(0, 60)]).slice(0, 5); save(); renderClient(); }
+function todoDel(i){ const u = me(); u.todoPerso = (u.todoPerso || []).filter((_, k) => k !== i); save(); renderClient(); }
+let todoEdit = false;
+VX.todop = function(){
+  const u = me(), s = todoStats(u), t = todoDay(u), st = todoStreak(u), R = 46, C = 2 * Math.PI * R;
+  const week = Array.from({ length: 7 }, (_, i) => { const d = addDays(new Date(), i - 6), p = todoStats(u, d).pct; return `<div class="td-day ${p >= .8 ? "ok" : p > 0 ? "mid" : ""} ${i === 6 ? "now" : ""}"><i></i><span>${d.toLocaleDateString("fr-FR",{ weekday:"narrow" })}</span></div>`; }).join("");
+  return `${vxHead("✅","Ma to-do perte de poids","Les petits gestes qui font la différence. Coche au fil de ta journée : tout repart à zéro demain matin.","linear-gradient(160deg,#E7F3EA,#C9DBFB)")}
+    <div class="td-top"><svg viewBox="0 0 110 110" width="104" height="104"><circle cx="55" cy="55" r="${R}" fill="none" stroke="#DDEFE3" stroke-width="12"/><circle cx="55" cy="55" r="${R}" fill="none" stroke="#1E7A4F" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - s.pct)}" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .4s"/><text x="55" y="61" text-anchor="middle" font-size="22" font-weight="700" fill="currentColor">${s.n}/${s.tot}</text></svg>
+      <div style="flex:1;min-width:0"><b style="font-size:17px">${s.n === s.tot ? "Journée parfaite 🎉" : s.pct >= .5 ? "Tu y es presque !" : s.n ? "C'est parti !" : "Ta journée commence"}</b><p class="small muted" style="margin:4px 0 8px">${st ? "🔥 " + st + " jour" + (st > 1 ? "s" : "") + " réussi" + (st > 1 ? "s" : "") + " d'affilée" : "Une journée est réussie à 80 % des cases."}</p><div class="td-week">${week}</div></div></div>
+    ${todoItems(u).map(([g, L]) => `<div class="tool-sub">${g}</div><div class="td-list">${L.map(([id, ic, l]) => `<div class="td-row ${t[id] ? "on" : ""}"><button class="td-chk" onclick="todoTick('${id}')" aria-pressed="${!!t[id]}"><span class="td-box">${t[id] ? "✓" : ""}</span><span class="td-ic">${ic}</span><span class="td-l">${esc(l)}</span></button>${todoEdit && id[0] === "p" ? `<button class="td-del" aria-label="Supprimer" onclick="todoDel(${+id.slice(1)})">×</button>` : ""}</div>`).join("")}</div>`).join("")}
+    ${(u.todoPerso || []).length < 5 ? `<div class="td-add"><input id="tdNew" class="inp" maxlength="60" placeholder="Ajouter ma propre tâche…" onkeydown="if(event.key==='Enter')todoAdd()"><button class="btn sm" onclick="todoAdd()">Ajouter</button></div>` : ""}
+    ${(u.todoPerso || []).length ? `<button class="mini-link" style="display:block;margin:10px auto 0" onclick="todoEdit=!todoEdit;renderClient()">${todoEdit ? "Terminé" : "Modifier mes tâches"}</button>` : ""}
+    <div class="card" style="margin-top:16px;background:var(--green-soft);box-shadow:none"><b>Un rappel chaque jour ?</b><p class="small" style="margin:4px 0 10px">Reçois un petit coup de pouce sur ton téléphone pour ne rien oublier.</p><button class="btn sm" onclick="openRappels()">Activer mes rappels</button></div>`;
+};
+
+/* ---------- Quiz perte de poids ---------- */
+const PQ = [
+  { q:"Quel est ton objectif ?", o:[["s","Perdre 2 à 4 kilos"],["m","Perdre 5 à 10 kilos"],["l","Perdre plus de 10 kilos"],["v","Surtout dégonfler mon ventre"]] },
+  { q:"Le matin, tu manges…", o:[["rien","Rien, ou juste un café"],["sucre","Plutôt sucré (céréales, viennoiseries…)"],["prot","Un petit-déj avec des protéines"]] },
+  { q:"Les fringales, chez toi, c'est…", o:[["am","Souvent l'après-midi"],["soir","Surtout le soir"],["rare","Rarement"]] },
+  { q:"Combien d'eau bois-tu par jour ?", o:[["peu","Moins d'1 litre"],["moyen","1 à 1,5 litre"],["bien","Plus d'1,5 litre"]] },
+  { q:"Tu bouges combien par semaine ?", o:[["peu","Presque pas"],["moyen","1 à 2 fois"],["bien","3 fois ou plus"]] },
+  { q:"Combien d'heures dors-tu par nuit ?", o:[["peu","Moins de 6 heures"],["moyen","6 à 7 heures"],["bien","7 heures ou plus"]] },
+  { q:"Après les repas, ton ventre…", o:[["souvent","Gonfle souvent"],["parfois","Gonfle parfois"],["jamais","Reste plat"]] },
+  { q:"Ton niveau de stress en ce moment ?", o:[["haut","Élevé"],["moyen","Moyen"],["bas","Faible"]] }
+];
+const PQ_PROFILS = {
+  faim:   { ic:"🍫", t:"Les fringales te freinent", d:"Ton corps réclame de l'énergie au mauvais moment, souvent parce que le petit-déj ou les repas ne tiennent pas assez au corps.",
+            a:[["🥚","Un petit-déj protéiné","Œufs, fromage blanc, flocons d'avoine : ça tient jusqu'à midi.","nav('petitdej')","Des idées"],["🍎","Prévois ton goûter","Une pomme et une poignée d'amandes vers 16 h évitent l'attaque du placard.",null,null],["✅","Coche ta to-do","« Pas de grignotage sucré » chaque jour, ça devient vite une habitude.","nav('todop')","Ma to-do"]],
+            p:"pulse", pt:"Le Café PULSE et son programme guidé de 3 semaines t'accompagnent pour reprendre le contrôle de tes journées." },
+  ventre: { ic:"🫧", t:"Ton ventre a besoin de douceur", d:"Une partie de ce que tu vois dans le miroir, c'est du gonflement : digestion lente, repas avalés vite, peu de fibres.",
+            a:[["💡","Comprends ton ventre","Le quiz ventre te donne des pistes précises.","nav('vquiz')","Faire le quiz ventre"],["🍽️","Ralentis à table","20 minutes par repas : moins d'air avalé, moins de gonflement.",null,null],["🤲","L'automassage","3 minutes guidées le soir pour relâcher le ventre.","startSession('massage')","Commencer"]],
+            p:"bao", pt:"BAO+ et son programme Ventre plat de 4 semaines offert, pensés pour un ventre plus léger." },
+  lent:   { ic:"🐢", t:"Ton métabolisme tourne au ralenti", d:"Peu de mouvement, peu d'eau ou un petit-déj sauté : ton corps économise son énergie au lieu de la dépenser.",
+            a:[["🔥","Connais tes besoins","Le calcul métabolique te dit combien ton corps dépense chaque jour.","nav('metabo')","Faire le calcul"],["🚶‍♀️","30 minutes de marche","Chaque jour, même en 3 fois 10 minutes. C'est le geste le plus efficace.","startSession('marche')","Marcher maintenant"],["💧","1,5 litre d'eau","Un verre au réveil, puis un à chaque pause.",null,null]],
+            p:"pulse", pt:"Le pack 3 semaines Café PULSE et son programme offert te donnent un cadre simple pour relancer la machine." },
+  stress: { ic:"😮‍💨", t:"Fatigue et stress pèsent sur la balance", d:"Quand on dort mal et qu'on est sous pression, le corps réclame du sucre et stocke plus facilement.",
+            a:[["😴","Priorité au sommeil","Au lit avant 23 h, écrans coupés 30 minutes avant.","nav('coucher')","Mon heure de coucher"],["🌬️","3 minutes pour souffler","Une respiration guidée avant le dîner calme les envies de grignoter.","nav('stress')","Respirer"],["✅","Un petit pas par jour","Ta to-do t'aide à avancer sans pression.","nav('todop')","Ma to-do"]],
+            p:"pulse", pt:"Le Café PULSE et son programme de 3 semaines t'aident à retrouver un rythme régulier." }
+};
+function pqProfil(a){
+  const sc = { faim:0, ventre:0, lent:0, stress:0 };
+  if(a[0] === "v") sc.ventre += 2;
+  if(a[1] === "sucre") sc.faim += 2; if(a[1] === "rien") { sc.faim += 1; sc.lent += 1; }
+  if(a[2] === "am" || a[2] === "soir") sc.faim += 2;
+  if(a[3] === "peu") sc.lent += 1; if(a[3] !== "bien") sc.ventre += .5;
+  if(a[4] === "peu") sc.lent += 2; if(a[4] === "moyen") sc.lent += 1;
+  if(a[5] === "peu") sc.stress += 2; if(a[5] === "moyen") sc.stress += 1;
+  if(a[6] === "souvent") sc.ventre += 2; if(a[6] === "parfois") sc.ventre += 1;
+  if(a[7] === "haut") sc.stress += 2; if(a[7] === "moyen") sc.stress += .5;
+  return Object.entries(sc).sort((x, y) => y[1] - x[1])[0][0];
+}
+let pq = null;
+function pqAns(k){ pq.a[pq.i] = k; pq.i++; if(pq.i >= PQ.length){ const u = me(); u.pquiz = { a: Object.assign({}, pq.a), profil: pqProfil(pq.a), t: Date.now() }; logEvent("pquiz_done", u.pquiz.profil); save(); } renderClient(); $("screen").scrollTop = 0; }
+VX.pquiz = function(){
+  const u = me();
+  if(!pq) return `${vxHead("🎯","Le quiz perte de poids","8 questions rapides pour comprendre ce qui te freine, et repartir avec un plan qui te ressemble.","linear-gradient(160deg,#E7F3EA,#C9DBFB)")}
+    <div class="card"><div style="display:grid;gap:10px;font-size:15px"><span>⏱️ 1 minute</span><span>🎯 Ton profil et tes 3 actions prioritaires</span><span>🔒 Tes réponses restent dans ton espace</span></div></div>
+    <button class="btn block" onclick="pq={i:0,a:{}};renderClient()">Commencer le quiz</button>
+    ${u.pquiz ? `<button class="mini-link" style="display:block;margin:14px auto 0" onclick="pq={i:${PQ.length},a:Object.assign({},me().pquiz.a)};renderClient()">Revoir mon dernier résultat</button>` : ""}`;
+  if(pq.i < PQ.length){
+    const Q = PQ[pq.i];
+    return `${vxBack()}<div class="row between" style="margin:6px 0 10px"><span class="chip">Question ${pq.i+1} / ${PQ.length}</span>${pq.i ? `<button class="mini-link" onclick="pq.i--;renderClient()">← Précédente</button>` : ""}</div>
+      <div class="vq-bar"><i style="width:${Math.round(pq.i / PQ.length * 100)}%"></i></div>
+      <h1 class="h-title" style="margin:18px 0 16px">${Q.q}</h1>
+      <div style="display:grid;gap:10px">${Q.o.map(([k,l]) => `<button class="vq-opt ${pq.a[pq.i]===k?"on":""}" onclick="pqAns('${k}')">${l}</button>`).join("")}</div>`;
+  }
+  const R = PQ_PROFILS[pqProfil(pq.a)], p = P(R.p), showP = p && eligible(p, u) && !cautious(p, u);
+  return `${vxBack()}<div class="univ-hero" style="background:linear-gradient(160deg,#E7F3EA,#C9DBFB)"><span style="font-size:34px">${R.ic}</span><span class="chip" style="margin-top:8px;display:inline-block">Ton profil</span><h1 class="h-title" style="color:#14532D;margin:8px 0 4px">${R.t}</h1><p style="font-size:14px;color:#2E3A33">${R.d}</p></div>
+    <h3 class="need-h" style="margin-top:18px">Tes 3 actions prioritaires</h3>
+    ${R.a.map(([ic,t,d,go,l]) => `<div class="card"><div class="row" style="gap:12px;align-items:flex-start"><span style="font-size:26px">${ic}</span><div style="flex:1"><b>${t}</b><p class="small" style="margin:4px 0 ${go ? 10 : 0}px">${d}</p>${go ? `<button class="btn sm ghost" onclick="${go}">${l}</button>` : ""}</div></div></div>`).join("")}
+    ${showP ? `<div class="card" style="background:var(--green-soft);box-shadow:none"><div class="row" style="gap:12px">${pimg(p,52)}<div style="flex:1"><b>Pour t'accompagner</b><p class="small" style="margin:4px 0 10px">${R.pt}</p><button class="btn sm" onclick="openProduct('${p.id}')">Découvrir ${esc(p.name)}</button></div></div></div>` : ""}
+    <button class="btn block line" onclick="pq={i:0,a:{}};renderClient()">Refaire le quiz</button>
+    <p class="disclaimer">Conseils généraux de bien-être. Pour une perte de poids importante ou en cas de problème de santé, parles-en à ton médecin.</p>`;
+};
+// Quitter le quiz par « Retour » le remet au début la prochaine fois
+const _goBackPQ = goBack;
+goBack = function(){ if(view === "pquiz") pq = null; return _goBackPQ.apply(this, arguments); };
+// Graines : 10 par journée parfaite
+const _pointsTD = points;
+points = function(u){ return _pointsTD(u) + evCount(u, "todo_full") * 10 + (evCount(u, "pquiz_done") ? 10 : 0); };
 </script>
 <script>
 /* =========================================================
