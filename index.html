@@ -728,6 +728,12 @@ button,a{-webkit-tap-highlight-color:transparent}
 .tt-photo{display:block;width:100%;aspect-ratio:16/9;background:center/cover}
 .tool-grid:has(.tt-quiz) .tool-tile:first-child{grid-column:1/-1}.tool-grid:has(.tt-quiz) .tool-tile:last-child{grid-column:auto}.tt-quiz{aspect-ratio:2.45!important}
 .uh-c{display:flex;align-items:center;gap:12px;padding:14px 16px}.uh-c .uh-ic{font-size:28px;flex:none}.uh-c h1{font-size:19px;line-height:1.2;letter-spacing:-.02em;margin:0}.uh-c p{font-size:12.5px;color:#2E3A33;margin:2px 0 0;line-height:1.35}
+.pw-sec{margin:22px 0 4px}
+.pw-row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:4px 16px 10px}.pw-row::-webkit-scrollbar{display:none}
+.pw-card{flex:0 0 44%;scroll-snap-align:start;display:flex;flex-direction:column;gap:3px;background:var(--card);border:none;border-radius:20px;padding:10px;box-shadow:var(--shadow);font:inherit;color:inherit;text-align:left;text-decoration:none;cursor:pointer}
+.pw-ph{height:120px;border-radius:14px;background:linear-gradient(160deg,#F3F8F4,#E3EFE7);display:grid;place-items:center;overflow:hidden;margin-bottom:6px}.pw-ph img{max-width:90%;max-height:108px;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.15))}
+.pw-card b{font-size:14px;line-height:1.25}.pw-card small{font-size:12px;color:var(--muted);line-height:1.3;min-height:31px}
+.pw-go{margin-top:6px;align-self:flex-start;background:#121614;color:#fff;border-radius:10px;padding:7px 11px;font-size:12.5px;font-weight:600}
 </style>
 </head>
 <body>
@@ -5851,6 +5857,39 @@ goBack = function(){ if(view === "pquiz") pq = null; return _goBackPQ.apply(this
 // Graines : 10 par journée parfaite
 const _pointsTD = points;
 points = function(u){ return _pointsTD(u) + evCount(u, "todo_full") * 10 + (evCount(u, "pquiz_done") ? 10 : 0); };
+
+/* ---------- Plus de programmes ici : les produits JIFU minceur défilent ---------- */
+NEEDS.poids.order = ["outils","produits","ba","tips","lire"];
+const PW_PACKS = ["pulse-ins-coffee-3","fr-gen3-pulse-bao-bundle","fr-bao-3","liv-pulse-bundle","fr-pulse-9","pulse-stm-omg-bundle","gen3-pulse-bundle"];
+function pwCards(u){
+  const prods = ["pulse","bao"].map(P).filter(p => p && eligible(p, u)).map(p => `<button class="pw-card" onclick="openProduct('${p.id}')"><span class="pw-ph">${IMGS[p.id] ? `<img src="${IMGS[p.id]}" alt="" loading="lazy">` : ""}</span><b>${esc(p.name)}</b><small>${esc(scTheme(p.id))}</small><span class="pw-go">Découvrir</span></button>`);
+  const packs = PW_PACKS.map(s => SHOP_PACKS.find(k => k.slug === s)).filter(Boolean).map(pk => `<a class="pw-card" href="${esc(packUrl(pk))}" target="_blank" rel="noopener" onclick="logEvent('order_click','pack:${pk.slug}')"><span class="pw-ph"><img src="${pk.img}" alt="" loading="lazy" onerror="this.style.opacity=0"></span><b>${esc(pk.name)}</b><small>${esc(pk.cont)}</small><span class="pw-go">Commander</span></a>`);
+  return prods.concat(packs);
+}
+let pwTimer = null;
+function pwAuto(){
+  clearInterval(pwTimer);
+  pwTimer = setInterval(() => {
+    const r = $("pwRow"); if(!r){ clearInterval(pwTimer); return; }
+    if(r._hold) return;
+    const step = (r.firstElementChild ? r.firstElementChild.offsetWidth : 160) + 12;
+    if(r.scrollLeft + r.clientWidth >= r.scrollWidth - 4) r.scrollTo({ left: 0, behavior: "smooth" });
+    else r.scrollBy({ left: step, behavior: "smooth" });
+  }, 2800);
+}
+const _renderUnivPW = renderUniv;
+renderUniv = function(){
+  const h = _renderUnivPW.apply(this, arguments);
+  if(univKey !== "poids") return h;
+  const u = me(), cards = pwCards(u);
+  if(!cards.length) return h;
+  const m = h.match(/<h3 class="need-h"><span>(\d+)<\/span>Pour t'accompagner<\/h3>[\s\S]*?(?=<h3 class="need-h">|$)/);
+  const sec = `<div class="pw-sec"><h3 class="need-h" style="margin-bottom:4px">${m ? `<span>${m[1]}</span>` : ""}Les produits JIFU pour t'aider</h3><p class="small muted" style="margin:0 0 10px">Café PULSE, BAO+ et les packs de la boutique.</p>
+    <div class="pw-row" id="pwRow" ontouchstart="this._hold=1" ontouchend="setTimeout(()=>this._hold=0,4000)" onmouseenter="this._hold=1" onmouseleave="this._hold=0">${cards.join("")}</div></div>`;
+  setTimeout(pwAuto, 300);
+  // la section « produits » d'origine est remplacée par le carrousel qui défile
+  return m ? h.replace(m[0], sec) : h.replace(/(<h3 class="need-h"><span>\d+<\/span>Nos avant\/après)/, sec + "$1");
+};
 </script>
 <script>
 /* =========================================================
