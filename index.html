@@ -5406,7 +5406,7 @@ const HOME6 = [
   { name:"Beauté", bg:"#E9DDD3", fg:"#fff", photo:"img/tile-beaute.webp", go:"openUniv('beaute')" },
   { name:"Sommeil & énergie", bg:"#E8E2F7", fg:"#fff", photo:"img/tile-sommeil.webp", go:"openUniv('forme')" },
   { name:"Ebooks", bg:"#3A2A1E", fg:"#fff", photo:"img/tile-ebooks.webp", go:"nav('ebooks')" },
-  { name:"La boutique", bg:"#E3EEF7", fg:"#1E4A6B", svg:BAG_SVG, go:"nav('boutique')" }
+  { name:"La boutique", bg:"#FBB1CE", fg:"#fff", photo:"img/tile-boutique.webp", go:"nav('boutique')" }
 ];
 homeTile = function(t){
   if(t.photo) return `<button class="theme photo${t.wide ? " wide" : ""}" style="background:${t.bg} url('${t.photo}') center/cover" onclick="${t.go}" aria-label="${t.name}"><span class="theme-t"><b>${t.name}</b></span></button>`;
