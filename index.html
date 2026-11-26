@@ -726,7 +726,8 @@ button,a{-webkit-tap-highlight-color:transparent}
 .td-add{display:flex;gap:8px;margin-top:12px}.td-add .inp{margin:0;flex:1}
 .tool-tile .tt-ic:has(.tt-photo){width:calc(100% + 28px);height:auto;margin:-14px -14px 8px;border-radius:20px 20px 0 0;background:none;overflow:hidden}
 .tt-photo{display:block;width:100%;aspect-ratio:16/9;background:center/cover}
-.tool-grid .tool-tile:last-child:nth-child(odd) .tt-photo{aspect-ratio:2.45}
+.tool-grid:has(.tt-quiz) .tool-tile:first-child{grid-column:1/-1}.tool-grid:has(.tt-quiz) .tool-tile:last-child{grid-column:auto}.tt-quiz{aspect-ratio:2.45!important}
+.uh-c{display:flex;align-items:center;gap:12px;padding:14px 16px}.uh-c .uh-ic{font-size:28px;flex:none}.uh-c h1{font-size:19px;line-height:1.2;letter-spacing:-.02em;margin:0}.uh-c p{font-size:12.5px;color:#2E3A33;margin:2px 0 0;line-height:1.35}
 </style>
 </head>
 <body>
@@ -3984,7 +3985,7 @@ renderUniv = function(){
   const pack = univKey === "poids" && eligible(P("pulse"),u) && !cautious(P("pulse"),u) ? `<button class="tool-row" style="background:var(--card);border-radius:18px;margin-top:10px;box-shadow:var(--shadow)" onclick="pulsePack()"><span class="tool-ic">${pimg(P("pulse"),36)}</span><span style="flex:1;min-width:0"><b>Pack 3 semaines Café PULSE</b><span>3 boîtes : tout le programme sans interruption</span></span><span class="muted">›</span></button>` : "";
   const ba = X.ba ? baRow(X.ba) : "";
   return `<button class="back" onclick="goBack()">${ICONS.back} Retour</button>
-   <div class="univ-hero" style="background:${X.g}"><span style="font-size:38px">${X.ic}</span><h1 class="h-title" style="color:${X.fg};margin:6px 0 4px">${X.name}</h1><p style="font-size:14px;color:#2E3A33">${X.intro}</p></div>
+   <div class="univ-hero uh-c" style="background:${X.g}"><span class="uh-ic">${X.ic}</span><div><h1 style="color:${X.fg}">${X.name}</h1><p>${X.intro}</p></div></div>
    ${(X.order || ["produits","prog","ba","tips","outils"]).map(k => {
      if(k === "lire"){ const bh = typeof needBooks === "function" ? needBooks(univKey) : ""; return bh ? `<h3 class="need-h"><span>${N()}</span>À lire</h3>${bh}` : ""; }
      if(k === "outils" && X.toolGroups) return `<h3 class="need-h"><span>${N()}</span>Tes outils</h3>` + X.toolGroups.map(([g,L]) => `<div class="tool-sub">${g}</div><div class="tool-grid">${L.map(([v,ic,l,d,act]) => `<button class="tool-tile" onclick="${act || `nav('${v}')`}"><span class="tt-ic">${ic}</span><b>${l}</b><span>${esc(d)}</span></button>`).join("")}</div>`).join("");
@@ -5741,9 +5742,9 @@ document.addEventListener("DOMContentLoaded", () => {
    ========================================================= */
 NEEDS.poids.intro = "Trois outils simples pour avancer, un jour après l'autre.";
 NEEDS.poids.toolGroups = [["Pour avancer", [
+  ["pquiz",'<span class="tt-photo tt-quiz" style="background-image:url(img/tool-quiz.webp)"></span>',"Le quiz perte de poids","8 questions pour trouver ce qui te freine."],
   ["metabo",'<span class="tt-photo" style="background-image:url(img/tool-metabo.webp)"></span>',"Mon calcul métabolique","Ce qu'il te faut chaque jour."],
-  ["todop",'<span class="tt-photo" style="background-image:url(img/tool-todo.webp)"></span>',"Ma to-do perte de poids","Les bons gestes du jour, à cocher."],
-  ["pquiz",'<span class="tt-photo" style="background-image:url(img/tool-quiz.webp)"></span>',"Le quiz perte de poids","8 questions pour trouver ce qui te freine."]
+  ["todop",'<span class="tt-photo" style="background-image:url(img/tool-todo.webp)"></span>',"Ma to-do perte de poids","Les bons gestes du jour, à cocher."]
 ]]];
 
 /* ---------- Ma to-do perte de poids ---------- */
