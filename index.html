@@ -3796,12 +3796,12 @@ function baRow(filter){
   let L = BA.filter(b => !filter || [].concat(filter).includes(b.p));
   if(!filter || Array.isArray(filter)){ const ord = ["pulse","bao","gen3"]; L = L.slice().sort((a,b) => ord.indexOf(a.p) - ord.indexOf(b.p)); }
   if(!L.length) return "";
-  return `<div class="carousel ba-row">${L.map(b => `<button class="ba" onclick="openBA('${b.id}')"><img src="${b.img}-s.webp" alt="Avant / après · ${esc(b.l || b.d)}" loading="lazy"></button>`).join("")}</div><p class="tiny muted" style="margin-top:6px">${BA_NOTE}</p>`;
+  return `<div class="carousel ba-row">${L.map(b => `<button class="ba" onclick="openBA('${b.id}')"><img src="${b.img}-s.webp?v=2" alt="Avant / après · ${esc(b.l || b.d)}" loading="lazy"></button>`).join("")}</div><p class="tiny muted" style="margin-top:6px">${BA_NOTE}</p>`;
 }
 function openBA(id){
   const b = BA.find(x => x.id === id), p = P(b.p), url = shopUrl(p);
   logEvent("ba_view", id);
-  openSheet(`<img src="${b.img}.webp" alt="Avant / après" style="width:100%;border-radius:18px;display:block">
+  openSheet(`<img src="${b.img}.webp?v=2" alt="Avant / après" style="width:100%;border-radius:18px;display:block">
     <p class="small muted" style="margin:10px 0 14px">${BA_NOTE}</p>
     <div class="rcard"><div class="rpic">${pimg(p,48)}</div><div style="flex:1;min-width:0"><b style="font-size:15px">${esc(p.name)}</b><div class="small muted">${esc(p.pitch)}</div></div><b>${price(p) || ""}</b></div>
     ${url ? `<a class="btn block" style="text-decoration:none" href="${esc(url)}" target="_blank" rel="noopener" onclick="logEvent('order_click','${p.id}')">Commander ${esc(p.name)}</a>` : ""}
