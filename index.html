@@ -724,6 +724,8 @@ button,a{-webkit-tap-highlight-color:transparent}
 .td-ic{font-size:20px}.td-l{font-size:15px;font-weight:600}
 .td-del{border:none;background:none;font-size:22px;color:var(--muted);padding:0 14px;cursor:pointer}
 .td-add{display:flex;gap:8px;margin-top:12px}.td-add .inp{margin:0;flex:1}
+.tool-tile .tt-ic:has(.tt-photo){width:calc(100% + 28px);height:auto;margin:-14px -14px 8px;border-radius:20px 20px 0 0;background:none;overflow:hidden}
+.tt-photo{display:block;width:100%;aspect-ratio:16/9;background:center/cover}
 </style>
 </head>
 <body>
@@ -5738,7 +5740,7 @@ document.addEventListener("DOMContentLoaded", () => {
    ========================================================= */
 NEEDS.poids.intro = "Trois outils simples pour avancer, un jour après l'autre.";
 NEEDS.poids.toolGroups = [["Pour avancer", [
-  ["metabo","🔥","Mon calcul métabolique","Ce qu'il te faut chaque jour."],
+  ["metabo",'<span class="tt-photo" style="background-image:url(img/tool-metabo.webp)"></span>',"Mon calcul métabolique","Ce qu'il te faut chaque jour."],
   ["todop","✅","Ma to-do perte de poids","Les bons gestes du jour, à cocher."],
   ["pquiz","🎯","Le quiz perte de poids","8 questions pour trouver ce qui te freine."]
 ]]];
