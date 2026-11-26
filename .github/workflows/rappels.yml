@@ -1,0 +1,13 @@
+# Réveille MyGlow toutes les 15 minutes pour envoyer les rappels (eau, produits, rituel du soir).
+# À placer dans le dépôt public myglowup : .github/workflows/rappels.yml
+name: Rappels MyGlow
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+jobs:
+  rappels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - run: curl -fsS -m 60 https://myglow-en3.pages.dev/api/cron || true

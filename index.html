@@ -682,6 +682,35 @@ button,a{-webkit-tap-highlight-color:transparent}
 .theme.wide .theme-t b{font-size:19px;max-width:60%}
 .tile-ill{position:absolute;right:10px;bottom:10px;width:84px;height:84px}.tile-ill svg{width:100%;height:100%;display:block}
 .theme.wide .tile-ill{width:110px;height:110px;right:18px;bottom:20px}
+
+.theme.photo{justify-content:flex-end}.theme.photo::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,22,14,0) 45%,rgba(40,22,14,.55))}.theme.photo .theme-t{position:relative;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.3)}
+/* --- Partage, parrainage, rappels, témoignages --- */
+.inv-code{display:flex;justify-content:space-between;align-items:center;background:#FDE3EE;border-radius:16px;padding:12px 16px;margin-top:6px}
+.inv-code span{font-size:13px;color:#8A3B62}.inv-code b{font-size:22px;letter-spacing:.18em;color:#4A1F35}
+.inv-link{display:flex;align-items:center;gap:8px;border:1px dashed #F2A7C6;border-radius:14px;padding:8px 8px 8px 12px;margin-top:8px}
+.inv-link span{flex:1;min-width:0;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
+.inv-link button{border:none;background:#4A1F35;color:#fff;border-radius:10px;padding:8px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.inv-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.inv-stats div{background:var(--card);box-shadow:var(--shadow);border-radius:16px;padding:12px;text-align:center}
+.inv-stats b{display:block;font-size:24px}.inv-stats span{font-size:12px;color:var(--muted)}
+.inv-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.inv-list span{background:#FDE3EE;color:#4A1F35;border-radius:99px;padding:5px 10px;font-size:12.5px}
+.ref-banner{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#FCB2CE,#FDD3E3);color:#4A1F35;border-radius:20px;padding:12px;margin:4px 0 14px;position:relative}
+.ref-banner b{display:block;font-size:14.5px}.ref-banner span{display:block;font-size:12px;opacity:.85}
+.ref-banner button{border:none;background:#4A1F35;color:#fff;border-radius:12px;padding:9px 11px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+.ref-banner button.x{position:absolute;top:-6px;right:-4px;background:#fff;color:#4A1F35;width:24px;height:24px;padding:0;border-radius:50%;box-shadow:var(--shadow);font-size:15px;line-height:1}
+.rp-list{display:flex;flex-direction:column;gap:8px}
+.rp-row{display:flex;align-items:center;gap:10px;background:var(--card);box-shadow:var(--shadow);border-radius:16px;padding:12px}
+.rp-ic{font-size:22px}.rp-t{flex:1;min-width:0}.rp-t b{display:block;font-size:14.5px}.rp-t small{display:block;font-size:12px;color:var(--muted)}
+.rp-row input[type=checkbox]{width:22px;height:22px;accent-color:#1E7A4F}
+.rp-h{border:1px solid var(--line);border-radius:10px;padding:6px;font:inherit;font-size:13px;background:var(--bg,#fff);color:inherit}
+.rp-steps{margin:10px 0 0 18px;padding:0;line-height:1.7;font-size:14.5px}
+.tm-ph{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tm-pick{position:relative;aspect-ratio:3/4;border:2px dashed #F2A7C6;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#FDF0F5 center/cover;cursor:pointer;overflow:hidden}
+.tm-pick input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.tm-pick span{font-size:28px}.tm-pick b{color:#8A3B62}
+.tm-pick.on{border-style:solid;border-color:#fff;box-shadow:var(--shadow)}.tm-pick.on span,.tm-pick.on b{display:none}
+.tm-cta{display:block;margin:8px auto 0;font-weight:600}
+.tm-adm{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}.tm-adm img{width:90px;border-radius:12px;align-self:flex-start}
 </style>
 </head>
 <body>
@@ -5373,18 +5402,322 @@ openUniv = function(k){ return _openUniv6(k === "ventre" ? "poids" : k); };
 
 const BAG_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="62" r="52" fill="#CFE3F7"/><path d="M34 46h52l6 50a6 6 0 0 1-6 7H34a6 6 0 0 1-6-7z" fill="#fff" stroke="#121614" stroke-width="3" stroke-linejoin="round"/><path d="M46 52V40a14 14 0 0 1 28 0v12" fill="none" stroke="#121614" stroke-width="3.5" stroke-linecap="round"/><circle cx="46" cy="54" r="3" fill="#1E7A4F"/><circle cx="74" cy="54" r="3" fill="#1E7A4F"/><path d="M60 70c-6-6-14 2-8 8l8 7 8-7c6-6-2-14-8-8z" fill="#E4574A"/></svg>`;
 const HOME6 = [
-  { name:"Perte de poids & ventre plat", bg:"#DCEFE2", fg:"#14532D", ill:"scale", go:"openUniv('poids')", wide:true },
-  { name:"Beauté", bg:"#FFE1D6", fg:"#9A3412", ill:"face", go:"openUniv('beaute')" },
-  { name:"Sommeil & énergie", bg:"#E8E2F7", fg:"#4C3A8A", ill:"moon", go:"openUniv('forme')" },
+  { name:"Perte de poids & ventre plat", bg:"#DCEFE2", fg:"#fff", photo:"img/tile-poids.webp", go:"openUniv('poids')", wide:true },
+  { name:"Beauté", bg:"#E9DDD3", fg:"#fff", photo:"img/tile-beaute.webp", go:"openUniv('beaute')" },
+  { name:"Sommeil & énergie", bg:"#E8E2F7", fg:"#fff", photo:"img/tile-sommeil.webp", go:"openUniv('forme')" },
   { name:"Ebooks", bg:"#FCE7D9", fg:"#8A3B12", book:true, go:"nav('ebooks')" },
   { name:"La boutique", bg:"#E3EEF7", fg:"#1E4A6B", svg:BAG_SVG, go:"nav('boutique')" }
 ];
 homeTile = function(t){
+  if(t.photo) return `<button class="theme photo${t.wide ? " wide" : ""}" style="background:${t.bg} url('${t.photo}') center/cover" onclick="${t.go}" aria-label="${t.name}"><span class="theme-t"><b>${t.name}</b></span></button>`;
   const art = t.book ? `<span class="tile-books"><i style="background:#E8B9A0"></i><i style="background:#9FC9B0"></i><i style="background:#F2D27F"></i></span>`
     : `<span class="tile-ill">${t.svg || (typeof EB_ILL !== "undefined" ? EB_ILL[t.ill] : "") || ""}</span>`;
   return `<button class="theme ${t.wide ? "wide" : ""}" style="background:${t.bg}" onclick="${t.go}"><span class="theme-t" style="color:${t.fg}"><b>${t.name}</b></span>${art}</button>`;
 };
 HOME_TILES.splice(0, HOME_TILES.length, ...HOME6);
+</script>
+<script>
+/* =========================================================
+   Partage & rappels : carte « Ma progression », invite une amie, rappels sur le téléphone, témoignages avant/après
+   ========================================================= */
+const APP_URL = "https://kcoaching02.github.io/myglowup/";
+const PINK = [[0,"#FAA0C3"],[.2,"#FCB2CE"],[.5,"#FBB1CE"],[.8,"#FCA6C7"],[1,"#FB9DC1"]];
+const PLUM = "#4A1F35";
+function needAccount(fn){ if(isGuest()){ afterAccount = fn; openAccount(); } else fn(); }
+function pinkBg(x, W, H){
+  const g = x.createLinearGradient(0,0,0,H); PINK.forEach(([o,c]) => g.addColorStop(o,c)); x.fillStyle = g; x.fillRect(0,0,W,H);
+  x.fillStyle = "rgba(255,255,255,.18)"; x.beginPath(); x.arc(W*.92, H*.06, W*.32, 0, 7); x.fill(); x.beginPath(); x.arc(W*.04, H*.9, W*.26, 0, 7); x.fill();
+}
+const cfont = (w,s,it) => `${it ? "italic " : ""}${w} ${s}px Sora, "Helvetica Neue", Arial, sans-serif`;
+function rrect(x, X, Y, W, H, r){ x.beginPath(); x.roundRect ? x.roundRect(X,Y,W,H,r) : x.rect(X,Y,W,H); }
+function ctext(x, t, cx, y, spacing){ if(spacing && "letterSpacing" in x){ x.letterSpacing = spacing + "px"; } x.textAlign = "center"; x.fillText(t, cx, y); x.textAlign = "left"; if("letterSpacing" in x) x.letterSpacing = "0px"; }
+function wrapLines(x, t, maxW){ const out = []; let l = ""; String(t).split(/\s+/).forEach(w => { const n = l ? l + " " + w : w; if(x.measureText(n).width > maxW && l){ out.push(l); l = w; } else l = n; }); if(l) out.push(l); return out; }
+async function shareCanvas(c, name, title, text){
+  try{
+    const blob = await new Promise(r => c.toBlob(r, "image/jpeg", .92)); const file = new File([blob], name, { type:"image/jpeg" });
+    if(navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], title, text }); return true; }
+  }catch(e){ if(e && e.name === "AbortError") return false; }
+  toast("Appuie longuement sur l'image pour l'enregistrer ou la partager"); return false;
+}
+
+/* ---------- Parrainage ---------- */
+(function(){ try{ const r = new URLSearchParams(location.search).get("ref"); if(r && /^[A-Za-z0-9]{4,10}$/.test(r)) localStorage.setItem("mg_ref", r.toUpperCase()); }catch(e){} })();
+function refCode(u){
+  if(!u.refCode){ const A = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let c = ""; const a = new Uint8Array(6); crypto.getRandomValues(a); a.forEach(n => c += A[n % A.length]); u.refCode = c; save(); }
+  return u.refCode;
+}
+const inviteUrl = u => APP_URL + (u && !isGuest() ? "?ref=" + refCode(u) : "");
+const _pointsP = points;
+points = function(u){ return _pointsP(u) + (u.filleules || []).length * 100 + (u.refBonus || 0); };
+function openInvite(){
+  needAccount(() => {
+    const u = me(), url = inviteUrl(u), n = (u.filleules || []).length;
+    logEvent("invite_open", "");
+    openSheet(`<div style="text-align:center"><div style="font-size:44px">💌</div><h2 class="h-title" style="margin:6px 0">Invite une amie</h2>
+      <p class="muted" style="margin:0 0 14px">Elle reçoit <b>50 graines</b> en créant son espace.<br>Toi, tu gagnes <b>100 graines</b> pour chaque amie inscrite.</p></div>
+      <div class="inv-code"><span>Ton code</span><b>${esc(refCode(u))}</b></div>
+      <div class="inv-link"><span>${esc(url.replace("https://",""))}</span><button onclick="copyInvite()">Copier</button></div>
+      <button class="btn block" style="margin-top:14px" onclick="shareInvite()">Envoyer à une amie</button>
+      <div class="inv-stats"><div><b>${n}</b><span>amie${n > 1 ? "s" : ""} inscrite${n > 1 ? "s" : ""}</span></div><div><b>${n * 100}</b><span>graines gagnées</span></div></div>
+      ${n ? `<div class="inv-list">${(u.filleules || []).slice(-6).reverse().map(f => `<span>🌸 ${esc(f.prenom || "Une amie")}</span>`).join("")}</div>` : ""}
+      <p class="tiny muted" style="text-align:center;margin-top:12px">Tes graines débloquent les ebooks de la bibliothèque.</p>`);
+  });
+}
+async function copyInvite(){ try{ await navigator.clipboard.writeText(inviteUrl(me())); toast("Lien copié ✓"); }catch(e){ toast(inviteUrl(me())); } }
+async function shareInvite(){
+  const u = me(), url = inviteUrl(u), text = `J'utilise MyGlow pour prendre soin de moi (outils, programmes, ebooks… et c'est gratuit). Rejoins-moi avec mon code ${refCode(u)}, tu auras 50 graines offertes 🌸`;
+  logEvent("invite_share", "");
+  try{ if(navigator.share){ await navigator.share({ title:"MyGlow", text, url }); return; } }catch(e){ if(e && e.name === "AbortError") return; }
+  copyInvite();
+}
+// Bandeau d'accueil pour une personne invitée
+let refName = null, refAsked = false;
+function refBanner(){
+  let r = null; try{ r = localStorage.getItem("mg_ref"); if(localStorage.getItem("mg_ref_x")) return ""; }catch(e){}
+  if(!r || !isGuest()) return "";
+  if(!refAsked){ refAsked = true; api("/ref/" + r).then(d => { refName = d.prenom || ""; if(view === "home") renderClient(); }).catch(() => { refName = ""; }); }
+  return `<div class="ref-banner"><span style="font-size:28px">🎁</span><div style="flex:1;min-width:0"><b>${refName ? esc(refName) + " t'invite sur MyGlow" : "Tu es invitée sur MyGlow"}</b><span>Crée ton espace gratuit : 50 graines offertes</span></div><button onclick="openAccount()">Je m'inscris</button><button class="x" aria-label="Fermer" onclick="try{localStorage.setItem('mg_ref_x','1')}catch(e){};this.parentNode.remove()">×</button></div>`;
+}
+
+/* ---------- Carte « Ma progression » ---------- */
+let pcOpts = { kg:false };
+function progStats(u){
+  const days = Math.max(1, daysBetween(u.createdAt || Date.now(), Date.now()) + 1);
+  let badges = 0; try{ badges = BADGES.filter(b => { try{ return b.test(u); }catch(e){ return false; } }).length; }catch(e){}
+  let eau = 0, ne = 0; for(let i = 0; i < 7; i++){ const h = (u.habits || {})[dkey(addDays(new Date(), -i))]; if(h && h.eau){ eau += h.eau; ne++; } }
+  let kg = 0; try{ const L = (u.poidsLog || []); if(L.length > 1) kg = L[0].kg - L[L.length-1].kg; }catch(e){}
+  return { days, streak: streak(u), pts: points(u), badges, eau: ne ? eau / ne : 0, kg };
+}
+const PC_PHRASES = ["Un pas après l'autre 🌱", "Je prends soin de moi, chaque jour ✨", "La régularité, mon super-pouvoir 💪", "Petits gestes, grands effets 🌸"];
+async function drawProgress(){
+  const u = me(), s = progStats(u), W = 1080, H = 1920, c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d");
+  try{ await document.fonts.load(cfont(700,40)); }catch(e){}
+  pinkBg(x, W, H);
+  x.fillStyle = "#fff"; x.font = cfont(700,34); ctext(x, "MYGLOW", W/2, 150, 10);
+  x.fillStyle = PLUM; x.font = cfont(700,96); ctext(x, "Ma progression", W/2, 300);
+  x.font = cfont(500,44); x.fillStyle = "#6B2E4C"; ctext(x, (u.prenom ? u.prenom + " · " : "") + "jour " + s.days + " sur MyGlow", W/2, 380);
+  // grand cercle : la série
+  x.fillStyle = "rgba(255,255,255,.92)"; x.beginPath(); x.arc(W/2, 720, 250, 0, 7); x.fill();
+  x.strokeStyle = "rgba(255,255,255,.55)"; x.lineWidth = 18; x.beginPath(); x.arc(W/2, 720, 285, 0, 7); x.stroke();
+  x.fillStyle = PLUM; x.font = cfont(800,200); ctext(x, String(s.streak), W/2, 770);
+  x.font = cfont(600,42); x.fillStyle = "#8A3B62"; ctext(x, s.streak > 1 ? "jours d'affilée 🔥" : "jour suivi 🔥", W/2, 850);
+  // tuiles
+  const tiles = [["🌱", s.pts, "graines"], ["🏅", s.badges, s.badges > 1 ? "badges" : "badge"], ["📅", s.days, "jours de parcours"],
+    pcOpts.kg && s.kg > 0 ? ["⚖️", "−" + fkg(s.kg), "kilos en moins"] : ["💧", s.eau ? fkg(s.eau) : "–", "verres d'eau / jour"]];
+  tiles.forEach(([ic, v, l], i) => {
+    const X = 90 + (i % 2) * 465, Y = 1080 + Math.floor(i / 2) * 250;
+    x.fillStyle = "rgba(255,255,255,.88)"; rrect(x, X, Y, 435, 220, 36); x.fill();
+    x.font = cfont(400,56); x.fillText(ic, X + 36, Y + 92);
+    x.fillStyle = PLUM; x.font = cfont(800,72); x.fillText(String(v), X + 120, Y + 100);
+    x.fillStyle = "#8A3B62"; x.font = cfont(500,32); x.fillText(l, X + 38, Y + 172);
+  });
+  x.fillStyle = "#fff"; x.font = cfont(700,54); ctext(x, PC_PHRASES[s.days % PC_PHRASES.length], W/2, 1650);
+  // pied : invitation
+  x.fillStyle = PLUM; rrect(x, 90, 1720, 900, 130, 65); x.fill();
+  x.fillStyle = "#fff"; x.font = cfont(700,36); ctext(x, "Rejoins-moi sur MyGlow", W/2, 1775);
+  x.font = cfont(500,30); x.fillStyle = "#FBC4DA"; ctext(x, isGuest() ? "kcoaching02.github.io/myglowup" : "Code ami : " + refCode(u) + " · 50 graines offertes", W/2, 1822);
+  return c;
+}
+async function openProgressCard(){
+  logEvent("progress_card", "");
+  openSheet(`<h2 class="h-title">Ma carte progression</h2><p class="small muted" style="margin:4px 0 12px">Au format story : partage-la sur Instagram, WhatsApp… Ajoute le lien MyGlow avec l'autocollant « Lien ».</p>
+    <div id="pcWrap" style="aspect-ratio:9/16;max-height:56vh;margin:0 auto;border-radius:18px;background:#FCB2CE;display:grid;place-items:center;overflow:hidden"><span class="muted small">Préparation…</span></div>
+    ${progStats(me()).kg > 0 ? `<label class="row" style="gap:10px;margin-top:12px;font-size:14px"><input type="checkbox" ${pcOpts.kg ? "checked" : ""} onchange="pcOpts.kg=this.checked;pcRender()"> Afficher mes kilos en moins</label>` : ""}
+    <button class="btn block" style="margin-top:14px" onclick="pcShare()">Partager ma carte</button>`);
+  pcRender();
+}
+async function pcRender(){ const c = await drawProgress(); window._pcCanvas = c; const w = $("pcWrap"); if(w) w.innerHTML = `<img src="${c.toDataURL("image/jpeg",.85)}" alt="Ma carte progression" style="width:100%;height:100%;object-fit:contain">`; }
+async function pcShare(){ const c = window._pcCanvas || await drawProgress(); const ok = await shareCanvas(c, "ma-progression-myglow.jpg", "Ma progression MyGlow", "Ma progression avec MyGlow 🌸 " + inviteUrl(me())); if(ok) logEvent("progress_share", ""); }
+
+/* ---------- Rappels sur le téléphone ---------- */
+const isIOS = () => /iPhone|iPad|iPod/.test(navigator.userAgent);
+const pushOk = () => "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+function b64ToU8(s){ s = s.replace(/-/g,"+").replace(/_/g,"/"); while(s.length % 4) s += "="; const b = atob(s); return Uint8Array.from(b, c => c.charCodeAt(0)); }
+async function pushSub(){ try{ const r = await navigator.serviceWorker.ready; return await r.pushManager.getSubscription(); }catch(e){ return null; } }
+const hourSel = (id, v) => `<select id="${id}" class="rp-h">${Array.from({ length:18 }, (_, i) => i + 6).map(h => `<option value="${h}" ${h === v ? "selected" : ""}>${h} h</option>`).join("")}</select>`;
+function rpPrefs(u){ return Object.assign({ eau:true, cure:true, cureH:8, soir:true, soirH:21, msg:true }, u.pushPrefs || {}); }
+async function openRappels(){
+  needAccount(async () => {
+    const u = me(), p = rpPrefs(u), hasProd = (u.mesProduits || []).length > 0;
+    if(!pushOk() || (isIOS() && !isStandalone())){
+      openSheet(`<div style="text-align:center"><div style="font-size:44px">🔔</div><h2 class="h-title" style="margin:6px 0">Mes rappels</h2></div>
+        ${isIOS() ? `<p class="muted">Sur iPhone, les rappels marchent quand MyGlow est installée sur ton écran d'accueil :</p>
+          <ol class="rp-steps"><li>Ouvre MyGlow dans <b>Safari</b></li><li>Appuie sur <b>Partager</b> <span style="font-size:18px">⎋</span> en bas de l'écran</li><li>Choisis <b>« Sur l'écran d'accueil »</b>, puis <b>Ajouter</b></li><li>Ouvre MyGlow depuis sa nouvelle icône et reviens ici</li></ol><button class="btn block line" style="margin-top:14px" onclick="closeSheet();nav('installer')">Voir le guide en images</button>`
+          : `<p class="muted">Ton navigateur ne permet pas les rappels. Essaie avec Chrome ou installe MyGlow sur ton écran d'accueil.</p>`}`);
+      return;
+    }
+    const s = await pushSub(), on = !!s && Notification.permission === "granted";
+    openSheet(`<div style="text-align:center"><div style="font-size:44px">🔔</div><h2 class="h-title" style="margin:6px 0">Mes rappels</h2>
+      <p class="muted" style="margin:0 0 12px">${on ? "Tes rappels sont activés sur ce téléphone." : "Un petit coup de pouce au bon moment, directement sur ton téléphone."}</p></div>
+      <div class="rp-list">
+        <label class="rp-row"><span class="rp-ic">💧</span><span class="rp-t"><b>Boire de l'eau</b><small>À 10 h, 13 h et 16 h</small></span><input type="checkbox" id="rpEau" ${p.eau ? "checked" : ""}></label>
+        ${hasProd ? `<label class="rp-row"><span class="rp-ic">💊</span><span class="rp-t"><b>Prendre mes produits</b><small>${esc(rpNames(u))}</small></span>${hourSel("rpCureH", p.cureH)}<input type="checkbox" id="rpCure" ${p.cure ? "checked" : ""}></label>` : ""}
+        <label class="rp-row"><span class="rp-ic">🌙</span><span class="rp-t"><b>Mon rituel du soir</b><small>Un moment calme avant de dormir</small></span>${hourSel("rpSoirH", p.soirH)}<input type="checkbox" id="rpSoir" ${p.soir ? "checked" : ""}></label>
+        <label class="rp-row"><span class="rp-ic">✉️</span><span class="rp-t"><b>Messages de ${esc(conseillerNom())}</b><small>Quand on t'écrit</small></span><input type="checkbox" id="rpMsg" ${p.msg ? "checked" : ""}></label>
+      </div>
+      <p id="rpErr" class="small hidden" style="color:var(--danger);margin-top:10px"></p>
+      <button id="rpBtn" class="btn block" style="margin-top:14px" onclick="rpSave()">${on ? "Enregistrer" : "Activer mes rappels"}</button>
+      ${on ? `<div class="row" style="gap:8px;margin-top:8px"><button class="btn line sm" style="flex:1" onclick="rpTest()">M'envoyer un essai</button><button class="btn line sm" style="flex:1" onclick="rpOff()">Tout couper</button></div>` : ""}`);
+  });
+}
+function rpNames(u){ return (u.mesProduits || []).map(mp => (P(mp.id) || {}).name).filter(Boolean).join(" et ") || "Tes produits"; }
+function rpRead(){
+  const v = id => { const e = $(id); return e ? e.checked : false; }, n = (id, d) => { const e = $(id); return e ? +e.value : d; };
+  return { eau: v("rpEau"), cure: v("rpCure"), cureH: n("rpCureH", 8), soir: v("rpSoir"), soirH: n("rpSoirH", 21), msg: v("rpMsg") };
+}
+function rpErr(m){ const e = $("rpErr"); if(e){ e.textContent = m; e.classList.remove("hidden"); } }
+async function rpSave(){
+  const prefs = rpRead(), b = $("rpBtn");
+  let perm = Notification.permission;
+  if(perm !== "granted") perm = await Notification.requestPermission();
+  if(perm !== "granted") return rpErr("Les notifications sont bloquées. Autorise-les pour MyGlow dans les réglages de ton téléphone.");
+  if(b){ b.disabled = true; b.textContent = "Un instant…"; }
+  try{
+    const reg = await navigator.serviceWorker.ready;
+    let s = await reg.pushManager.getSubscription();
+    if(!s){ const { key } = await api("/push/key"); s = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey: b64ToU8(key) }); }
+    const u = me(); u.pushPrefs = prefs;
+    await api("/push/sub", { method:"POST", body:{ sub: s.toJSON(), prefs: Object.assign({ names: rpNames(u) }, prefs), tz: (Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Paris") } });
+    logEvent("rappels_on", ""); save(); closeSheet(); toast("Rappels enregistrés ✓");
+  }catch(e){ if(b){ b.disabled = false; b.textContent = "Réessayer"; } rpErr(e.message || "Impossible d'activer les rappels."); }
+}
+async function rpTest(){ const s = await pushSub(); if(!s) return; try{ await api("/push/test", { method:"POST", body:{ ep: s.endpoint } }); toast("Essai envoyé : regarde tes notifications"); }catch(e){ toast(e.message); } }
+async function rpOff(){ const s = await pushSub(); if(s){ try{ await api("/push/unsub", { method:"POST", body:{ ep: s.endpoint } }); }catch(e){} try{ await s.unsubscribe(); }catch(e){} } closeSheet(); toast("Rappels coupés sur ce téléphone"); }
+
+/* ---------- Témoignages avant / après ---------- */
+let tm = null;
+const TM_PRODS = () => [["pulse","Café PULSE"],["bao","BAO+"],["gen3","Gen3"]].concat(PRODUCTS.filter(p => !["pulse","bao","gen3"].includes(p.id)).map(p => [p.id, p.name])).concat([["autre","Autre / plusieurs"]]);
+function openTemo(){
+  needAccount(() => {
+    tm = { a:null, b:null, p:"", d:"", txt:"", name:true };
+    logEvent("temo_open", "");
+    openSheet(`<h2 class="h-title">Partage ta transformation</h2><p class="small muted" style="margin:4px 0 12px">Tes photos deviennent une jolie carte avant / après. ${esc(conseillerNom())} la vérifie avant de la publier dans MyGlow.</p>
+      <div class="tm-ph"><label class="tm-pick" id="tmA"><input type="file" accept="image/*" onchange="tmFile(this,'a')"><span>📷</span><b>Avant</b></label><label class="tm-pick" id="tmB"><input type="file" accept="image/*" onchange="tmFile(this,'b')"><span>📷</span><b>Après</b></label></div>
+      <label class="f" for="tmP">Avec quel produit ?</label><select id="tmP" class="inp" onchange="tm.p=this.value"><option value="">Choisis…</option>${TM_PRODS().map(([k,l]) => `<option value="${k}">${esc(l)}</option>`).join("")}</select>
+      <label class="f" for="tmD">En combien de temps ?</label><input id="tmD" class="inp" maxlength="30" placeholder="ex : 2 mois" oninput="tm.d=this.value">
+      <label class="f" for="tmT">Ton petit mot (facultatif)</label><textarea id="tmT" class="inp" rows="2" maxlength="200" placeholder="Ce qui a changé pour toi…" oninput="tm.txt=this.value"></textarea>
+      <label class="row" style="gap:10px;margin-top:12px;font-size:14px"><input type="checkbox" id="tmN" checked onchange="tm.name=this.checked"> Afficher mon prénom</label>
+      <label class="row" style="gap:10px;margin-top:10px;align-items:flex-start;font-size:13px"><input type="checkbox" id="tmC" style="margin-top:3px"><span>J'autorise la publication de ces photos dans l'app MyGlow. Je peux demander à les retirer à tout moment.</span></label>
+      <p id="tmErr" class="small hidden" style="color:var(--danger);margin-top:10px"></p>
+      <button class="btn block" style="margin-top:14px" onclick="tmPreview()">Voir ma carte</button>`);
+  });
+}
+function tmFile(inp, k){
+  const f = inp.files && inp.files[0]; if(!f) return;
+  const url = URL.createObjectURL(f);
+  loadImg(url).then(im => { tm[k] = im; const l = $(k === "a" ? "tmA" : "tmB"); if(l){ l.style.backgroundImage = `url('${url}')`; l.classList.add("on"); } }).catch(() => toast("Cette photo ne s'ouvre pas, essaie une autre."));
+}
+function tmLabel(){ const pn = (TM_PRODS().find(x => x[0] === tm.p) || [,""])[1]; return [tm.d.trim(), tm.p && tm.p !== "autre" ? "de " + pn : ""].filter(Boolean).join(" "); }
+function drawTemo(){
+  const W = 720, H = 1280, c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d"), u = me();
+  pinkBg(x, W, H);
+  x.fillStyle = "#fff"; x.font = cfont(700,58); ctext(x, "TRANSFORMATION", W/2, 150, 6);
+  const lab = tmLabel(); x.font = cfont(600,26); ctext(x, (lab || "Mon parcours MyGlow").toUpperCase(), W/2, 200, 3);
+  [[tm.a, 40], [tm.b, 376]].forEach(([im, X]) => { x.fillStyle = "#fff"; rrect(x, X - 6, 274, 316, 452, 24); x.fill(); coverDraw(x, im, X, 280, 304, 440, 18); });
+  x.fillStyle = "#5A2E1E"; x.font = cfont(700,34); ctext(x, "AVANT", 192, 790, 4); ctext(x, "APRÈS", 528, 790, 4);
+  let y = 860;
+  if(tm.txt.trim()){
+    x.font = cfont(500,26,true); const L = wrapLines(x, "« " + tm.txt.trim() + " »", 560).slice(0, 4);
+    x.fillStyle = "rgba(255,255,255,.85)"; rrect(x, 60, y, 600, 50 + L.length * 38, 26); x.fill();
+    x.fillStyle = PLUM; L.forEach((l, i) => ctext(x, l, W/2, y + 52 + i * 38)); y += 80 + L.length * 38;
+  }
+  if(tm.name && u.prenom){ x.fillStyle = PLUM; x.font = cfont(700,30); ctext(x, "— " + u.prenom, W/2, Math.max(y + 20, 1080)); }
+  x.fillStyle = "#fff"; x.font = cfont(700,24); ctext(x, "MYGLOW", W/2, 1220, 8);
+  return c;
+}
+function tmErr(m){ const e = $("tmErr"); if(e){ e.textContent = m; e.classList.remove("hidden"); } }
+function tmPreview(){
+  if(!tm.a || !tm.b) return tmErr("Ajoute tes 2 photos : avant et après.");
+  if(!tm.p) return tmErr("Choisis le produit utilisé.");
+  if(!($("tmC") || {}).checked) return tmErr("Coche la case d'autorisation pour pouvoir publier.");
+  const c = drawTemo(); window._tmCanvas = c;
+  const back = tm; openSheet(`<h2 class="h-title">Ta carte est prête</h2>
+    <img src="${c.toDataURL("image/jpeg",.85)}" alt="Ma transformation" style="width:100%;max-height:58vh;object-fit:contain;border-radius:18px;display:block">
+    <p id="tmErr" class="small hidden" style="color:var(--danger);margin-top:10px"></p>
+    <button id="tmSend" class="btn block" style="margin-top:14px" onclick="tmSend()">Envoyer pour publication</button>
+    <div class="row" style="gap:8px;margin-top:8px"><button class="btn line sm" style="flex:1" onclick="shareCanvas(window._tmCanvas,'ma-transformation.jpg','Ma transformation','Ma transformation avec MyGlow 🌸 ${APP_URL}')">La partager moi-même</button><button class="btn line sm" style="flex:1" onclick="openTemo()">Recommencer</button></div>`);
+  tm = back;
+}
+function canvasData(c, w){ const h = Math.round(c.height * w / c.width), k = document.createElement("canvas"); k.width = w; k.height = h; k.getContext("2d").drawImage(c, 0, 0, w, h); const d = k.toDataURL("image/webp", .82); return d.startsWith("data:image/webp") ? d : k.toDataURL("image/jpeg", .84); }
+async function tmSend(){
+  const c = window._tmCanvas, b = $("tmSend"); if(!c) return;
+  b.disabled = true; b.textContent = "Envoi…";
+  try{
+    await api("/temo", { method:"POST", body:{ img: canvasData(c, 720), imgs: canvasData(c, 360), product: tm.p, label: (tm.name && me().prenom ? me().prenom + " · " : "") + (tmLabel() || "Ma transformation"), txt: tm.txt.trim() } });
+    logEvent("temo_send", tm.p); tm = null; closeSheet();
+    openSheet(`<div style="text-align:center;padding:10px 0"><div style="font-size:48px">💖</div><h2 class="h-title">Merci !</h2><p class="muted">${esc(conseillerNom())} va regarder ta carte. Tu recevras un message dès qu'elle sera publiée.</p><button class="btn block" style="margin-top:14px" onclick="closeSheet()">Super</button></div>`);
+  }catch(e){ b.disabled = false; b.textContent = "Réessayer"; tmErr(e.message); }
+}
+// Carrousel avant/après : les témoignages validés passent en premier
+const temoImg = (id, s) => API + "/temo/img/" + id + (s ? "?s=1" : "");
+const _baRowT = baRow;
+baRow = function(filter){
+  const T = (DB.temo || []).filter(t => !filter || [].concat(filter).includes(t.product));
+  let h = _baRowT(filter);
+  if(T.length){
+    const cards = T.map(t => `<button class="ba" onclick="openTemoView('${t.id}')"><img src="${temoImg(t.id,1)}" alt="Avant / après · ${esc(t.label)}" loading="lazy"></button>`).join("");
+    h = h ? h.replace('<div class="carousel ba-row">', '<div class="carousel ba-row">' + cards) : `<div class="carousel ba-row">${cards}</div><p class="tiny muted" style="margin-top:6px">${BA_NOTE}</p>`;
+  }
+  return h ? h + `<button class="mini-link tm-cta" onclick="openTemo()">📸 Toi aussi, partage ta transformation</button>` : h;
+};
+function openTemoView(id){
+  const t = (DB.temo || []).find(x => x.id === id); if(!t) return; const p = P(t.product);
+  logEvent("ba_view", id);
+  openSheet(`<img src="${temoImg(id)}" alt="Avant / après" style="width:100%;border-radius:18px;display:block">
+    ${t.txt ? `<p style="margin:12px 0 0;font-style:italic">« ${esc(t.txt)} »</p>` : ""}
+    <p class="small muted" style="margin:10px 0 14px">${BA_NOTE}</p>
+    ${p ? `<button class="rcard" style="width:100%;text-align:left" onclick="closeSheet();openProduct('${p.id}')"><div class="rpic">${pimg(p,48)}</div><div style="flex:1;min-width:0"><b style="font-size:15px">${esc(p.name)}</b><div class="small muted">${esc(p.pitch || "")}</div></div><span class="muted">›</span></button>` : ""}`);
+}
+
+/* ---------- « Moi » : section Partager & rappels ---------- */
+const _renderMoiPart = renderMoi;
+renderMoi = function(){
+  const h = _renderMoiPart(), u = me(), n = (u.filleules || []).length;
+  const row = (go, ic, l, d) => `<button class="tool-row" onclick="${go}"><span class="tool-ic">${ic}</span><span style="flex:1;min-width:0"><b>${l}</b><span>${d}</span></span><span class="muted">›</span></button>`;
+  const sec = `<div class="tool-sec">Partager & rappels</div><div class="tool-list">
+    ${row("openRappels()","🔔","Mes rappels", u.pushPrefs ? "Activés · eau, produits, rituel du soir" : "Un coup de pouce sur ton téléphone")}
+    ${row("openProgressCard()","✨","Ma carte progression","Une jolie image à partager en story")}
+    ${row("openInvite()","💌","Invite une amie", n ? n + " amie" + (n > 1 ? "s" : "") + " inscrite" + (n > 1 ? "s" : "") + " · +" + n * 100 + " graines" : "+100 graines par amie inscrite")}
+    ${row("openTemo()","📸","Partage ta transformation","Ton avant / après dans MyGlow")}</div>`;
+  const k = h.indexOf('<div class="tool-sec">Mon suivi</div>');
+  return k < 0 ? h + sec : h.slice(0, k) + sec + h.slice(k);
+};
+// Accueil : bandeau d'invitation pour les personnes arrivées avec un lien ami
+const _renderClientPart = renderClient;
+renderClient = function(){
+  _renderClientPart();
+  if(view === "home" && me()){ const b = refBanner(), s = $("screen"); if(b && s && !s.querySelector(".ref-banner")) s.insertAdjacentHTML("afterbegin", b); }
+};
+
+/* ---------- Espace conseiller : témoignages à valider ---------- */
+let admTemo = null, admTemoLoading = false;
+async function admTemoLoad(){ if(admTemoLoading) return; admTemoLoading = true; try{ admTemo = (await api("/admin/temo", { admin:true })).list || []; }catch(e){ admTemo = []; } admTemoLoading = false; if(atab === "avis") renderAdmin(); }
+async function admTemoSet(id, st){
+  try{ if(st === "del") await api("/admin/temo/" + id, { method:"DELETE", admin:true }); else await api("/admin/temo/" + id, { method:"POST", admin:true, body:{ status: st } });
+    adminToast(st === "ok" ? "Témoignage publié ✓ La cliente est prévenue." : st === "del" ? "Témoignage supprimé" : "Témoignage refusé"); admTemo = null; admTemoLoad(); }
+  catch(e){ adminToast(e.message); }
+}
+const _adminAvisT = adminAvis;
+adminAvis = function(){
+  if(admTemo === null){ admTemoLoad(); return `<div class="card"><h3>Témoignages avant / après</h3><p class="muted small">Chargement…</p></div>` + _adminAvisT(); }
+  const pend = admTemo.filter(t => t.status === "pending"), pub = admTemo.filter(t => t.status === "ok");
+  const card = (t, act) => `<div class="tm-adm"><img src="${t.imgs}" alt=""><div style="flex:1;min-width:0"><b>${esc(t.label || t.prenom || "")}</b><div class="small muted">${esc((P(t.product) || {}).name || "Autre")} · ${new Date(t.created).toLocaleDateString("fr-FR")}</div>${t.txt ? `<p class="small" style="margin:6px 0">« ${esc(t.txt)} »</p>` : ""}<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${act}</div></div></div>`;
+  return `<div class="card"><h3>Témoignages avant / après ${pend.length ? `<span class="chip peach">${pend.length} à valider</span>` : ""}</h3>
+    <p class="small muted">Envoyés par tes clientes depuis l'app, avec leur accord. Une fois publiés, ils apparaissent en premier dans les avant/après.</p>
+    ${pend.map(t => card(t, `<button class="btn sm" onclick="admTemoSet('${t.id}','ok')">Publier</button><button class="btn sm line" onclick="admTemoSet('${t.id}','no')">Refuser</button>`)).join("") || `<p class="small muted">Aucun témoignage en attente.</p>`}
+    ${pub.length ? `<h4 style="margin:16px 0 6px">Publiés (${pub.length})</h4>` + pub.map(t => card(t, `<button class="btn sm line" onclick="admTemoSet('${t.id}','no')">Retirer</button><button class="btn sm line" onclick="if(confirm('Supprimer définitivement ?'))admTemoSet('${t.id}','del')">Supprimer</button>`)).join("") : ""}</div>` + _adminAvisT();
+};
+const _renderAdminT = renderAdmin;
+renderAdmin = function(){
+  _renderAdminT();
+  if(admTemo === null && !admTemoLoading && onlineMode === "admin") admTemoLoad();
+  const n = (admTemo || []).filter(t => t.status === "pending").length;
+  if(n){ const b = [...document.querySelectorAll(".admin .tabs button")].find(x => /^Avis & suivi/.test(x.textContent)); if(b) b.textContent = b.textContent.replace(/^Avis & suivi.*$/, "Avis & suivi (" + n + "+)"); }
+};
+document.addEventListener("DOMContentLoaded", () => {
+  const _apiP = api;
+  api = function(path, opts){ if(path === "/signup" && opts && opts.body && !opts.body.ref){ try{ opts.body.ref = localStorage.getItem("mg_ref"); }catch(e){} } return _apiP(path, opts); };
+});
 </script>
 <script>
 /* =========================================================
@@ -5452,6 +5785,7 @@ async function loadPublic(){
   try{
     const p = await api("/public");
     DB.settings = p.settings || {}; DB.contents = p.contents || []; DB.reviews = p.reviews || []; DB.ebooks = p.ebooks || null;
+    try{ const t = await api("/temo"); DB.temo = t.list || []; }catch(e){}
     if(me()) applyContentFlags(me());
     try{ localStorage.setItem(LS_KEY, JSON.stringify(DB)); }catch(e){}
   }catch(e){}
@@ -5490,7 +5824,7 @@ async function doSignup(){
   try{ _obNext(); } finally { nav = prevNav; obValid = _obValid; }
   const u = me(); DB.users = DB.users.filter(x => x.id === u.id);
   try{
-    const r = await api("/signup", { method: "POST", body: { email, password: pass, data: stripLocal(u), quizLead: saved.quizLead || null } });
+    const r = await api("/signup", { method: "POST", body: { email, password: pass, data: stripLocal(u), quizLead: saved.quizLead || null, ref: (()=>{ try{ return localStorage.getItem("mg_ref"); }catch(e){ return null; } })() } });
     localStorage.setItem(TK, r.token);
     const photos = u.photos; const d = r.data; if(photos) d.photos = photos;
     DB.users = [d]; DB.meId = d.id; baseMe = clone(r.data); ob = null;
