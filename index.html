@@ -804,6 +804,38 @@ button,a{-webkit-tap-highlight-color:transparent}
 .pm .tool-tile,.pm .td-list,.pm .td-top{box-shadow:none;border:1px solid var(--line)}
 .pm .td-row.on .td-box{background:var(--brand);border-color:var(--brand)}.pm .td-top{color:var(--brand)}
 .pm .tm-cta{color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:#C9C1B6;font-weight:500}.pm .pm-scroll{scroll-padding-left:20px}
+
+/* ---- Charte MyGlow : vert profond, crème, or ---- */
+.pm{--bg:#F4EEE5;--card:#FBF7F0;--ink:#1D3B30;--muted:#7D776C;--line:#E8DDCB;--brand:#1F4A3A;--brand-soft:#E6EDE7;--gold:#C29A55;--gold-l:#E8CF94}
+.pm body,.pm .phone,.pm #screen{background:var(--bg)}
+.pm .h-title,.pm .pm-h1,.pm .pm-logo{color:var(--brand)}
+.pm-brand{text-align:center;margin:-6px 0 26px}
+.pm-word{font-family:"Fraunces",Georgia,serif;font-size:52px;line-height:1;color:var(--brand);letter-spacing:-.02em}
+.pm-word em{font-style:italic;background:linear-gradient(120deg,#B8893E,#E3C37F 50%,#A97B32);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:4px}
+.pm-swash{display:block;width:150px;height:12px;margin:2px auto 0 40%}
+.pm-tag{font-family:"Fraunces",Georgia,serif;font-size:22px;color:var(--brand);margin:8px 0 6px}
+.pm-rule{display:block;width:110px;height:2px;margin:0 auto;border-radius:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.pm-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pm-tile{aspect-ratio:1.12;border-radius:24px;border:2px solid transparent;font-family:"Fraunces",Georgia,serif;font-size:23px;line-height:1.15;display:grid;place-items:center;text-align:center;padding:10px;box-shadow:0 14px 24px -16px rgba(60,45,20,.45),inset 0 1px 0 rgba(255,255,255,.25)}
+.pm-g{color:#F6EFE2;background:radial-gradient(120% 90% at 30% 20%,#3C735C,#1F4A3A 55%,#173A2D) padding-box,linear-gradient(135deg,#F1DCA0,#B8893E 45%,#E8CF94 75%,#A97B32) border-box}
+.pm-c{color:var(--brand);background:radial-gradient(120% 90% at 30% 15%,#FFFDF8,#F3E9D8 70%,#EADDC6) padding-box,linear-gradient(135deg,#F1DCA0,#B8893E 45%,#E8CF94 75%,#A97B32) border-box}
+.pm-tile:active{transform:scale(.98)}
+.pm .pm-focus{margin-top:18px;background:var(--card);color:var(--brand);border:1.5px solid var(--gold-l);padding:18px 56px 18px 20px}
+.pm .pm-focus b{font-size:20px;color:var(--brand);margin:0 0 2px}.pm .pm-focus span{color:var(--muted);opacity:1}
+.pm .pm-focus>i{border-color:var(--gold-l);color:var(--gold)}
+.pm .pm-bar{background:var(--line)}.pm .pm-bar i{background:var(--gold)}
+.pm .pm-label{color:var(--gold)}
+.pm .pm-list{background:var(--card);border-color:var(--line)}
+.pm .pm-ic{background:#EFE6D6;color:var(--brand)}
+.pm .pm-ph{background:#EFE6D6}
+.pm .pm-icbtn{color:var(--brand)}.pm .pm-icbtn .dot{background:var(--gold)}
+/* barre de navigation crème */
+.pm .nav{background:#F8F2E8;border:1.5px solid var(--gold-l);border-radius:28px;box-shadow:0 12px 26px -18px rgba(60,45,20,.5)}
+.pm .nav button{color:var(--brand);position:relative}.pm .nav button+button::before{content:"";position:absolute;left:0;top:22%;height:56%;width:1px;background:#E3D6BF}
+.pm .nav button.on{background:#EBDFCB;border-radius:20px;color:var(--brand)}.pm .nav button.on::after{display:none}.pm .nav button.on+button::before{display:none}
+.pm .nav button span{color:var(--brand)}
+.pm .btn{background:var(--brand)}.pm .btn.line{background:none;border-color:var(--brand);color:var(--brand)}
+.pm .av-btn>*{background:#EFE6D6!important;color:var(--brand)!important;border:1px solid var(--gold-l)}.pm .nav-dot{background:var(--gold)!important}.pm .pm-pill{background:#EFE6D6;color:var(--brand)}
 </style>
 </head>
 <body>
@@ -6030,36 +6062,36 @@ const PM_TOOL_IC = { pquiz:"bilan", todop:"gestes", metabo:"besoins", poids:"cha
 const pmToolIc = (v, act) => PM_TOOL_IC[v] || (/massage|visage/.test(act || "") ? "hand" : /dodo|reveil/.test(act || "") ? "sommeil" : "dot");
 
 /* ---------- Vocabulaire ---------- */
-Object.assign(NEEDS.poids, { name:"Silhouette", intro:"Avancer à ton rythme, sans pression." });
+Object.assign(NEEDS.poids, { name:"Perdre du poids", intro:"Avancer à ton rythme, sans pression." });
 NEEDS.poids.toolGroups = [["", [
   ["pquiz","","Mon bilan","1 minute pour savoir par où commencer."],
   ["todop","","Mes gestes du jour","Quelques habitudes simples, à cocher."],
   ["metabo","","Mes besoins","Ce dont ton corps a besoin chaque jour."]
 ]]];
 if(NEEDS.beaute) NEEDS.beaute.intro = "Peau, cheveux, ongles : les bons gestes.";
-if(NEEDS.forme) Object.assign(NEEDS.forme, { name:"Sommeil", intro:"Mieux dormir, mieux récupérer." });
+if(NEEDS.forme) Object.assign(NEEDS.forme, { name:"Sommeil & énergie", intro:"Mieux dormir, mieux récupérer." });
 
 const PM_UNIV = [
   ["silhouette", "Silhouette", "Alimentation et bonnes habitudes", "openUniv('poids')"],
   ["beaute", "Beauté", "Peau, cheveux, ongles", "openUniv('beaute')"],
-  ["sommeil", "Sommeil", "Repos et énergie", "openUniv('forme')"],
+  ["sommeil", "Sommeil & énergie", "Repos et énergie", "openUniv('forme')"],
   ["lectures", "Lectures", "Nos guides à télécharger", "nav('ebooks')"],
   ["boutique", "Boutique", "Les produits JIFU", "nav('boutique')"]
 ];
 const pmRow = (ic, t, d, go, right) => `<button class="pm-row" onclick="${go}"><span class="pm-ic">${pmIco(ic)}</span><span class="pm-tx"><b>${t}</b>${d ? `<small>${d}</small>` : ""}</span>${right || `<span class="pm-chev">${LI(PMI.arrow, 18)}</span>`}</button>`;
 
 /* ---------- Accueil ---------- */
+const PM_TILES = [["Perdre<br>du poids","openUniv('poids')","g"],["Beauté","openUniv('beaute')","c"],["Sommeil<br>& énergie","openUniv('forme')","c"],["Ebooks","nav('ebooks')","g"]];
 renderHome = function(){
-  const u = me(), unread = (u.inbox || []).filter(m => !m.read).length, hr = nowHour();
-  const hello = hr < 18 ? "Bonjour" : "Bonsoir";
+  const u = me(), unread = (u.inbox || []).filter(m => !m.read).length;
   let focus;
-  if(!u.pquiz) focus = `<button class="pm-focus" onclick="nav('pquiz')"><small>Pour commencer</small><b>Ton bilan en 1 minute</b><span>Quelques questions, puis un plan qui te ressemble.</span><i>${LI(PMI.arrow, 20)}</i></button>`;
-  else { const s = todoStats(u); focus = `<button class="pm-focus" onclick="nav('todop')"><small>Aujourd'hui</small><b>Tes gestes du jour</b><span>${s.n} sur ${s.tot} · ${s.n === s.tot ? "journée réussie" : "continue comme ça"}</span><div class="pm-bar"><i style="width:${Math.round(s.pct * 100)}%"></i></div><i>${LI(PMI.arrow, 20)}</i></button>`; }
-  return `<div class="pm-top"><div class="pm-logo">MyGlow</div><div class="row" style="gap:6px"><button class="pm-icbtn" onclick="nav('inbox')" aria-label="Messages">${ICONS.bell}${unread ? `<i class="dot"></i>` : ""}</button><button class="av-btn" onclick="nav('moi')" aria-label="Moi">${avatar(u,36,18)}</button></div></div>
-    <h1 class="pm-h1">${hello}${u.prenom ? ",<br>" + esc(u.prenom) : ""}</h1>
+  if(!u.pquiz) focus = `<button class="pm-focus" onclick="nav('pquiz')"><b>Ton bilan en 1 minute</b><span>Quelques questions, puis un plan pour toi.</span><i>${LI(PMI.arrow, 18)}</i></button>`;
+  else { const s = todoStats(u); focus = `<button class="pm-focus" onclick="nav('todop')"><b>Tes gestes du jour</b><span>${s.n} sur ${s.tot}${s.n === s.tot ? " · journée réussie" : ""}</span><div class="pm-bar"><i style="width:${Math.round(s.pct * 100)}%"></i></div><i>${LI(PMI.arrow, 18)}</i></button>`; }
+  return `<div class="pm-top"><span></span><div class="row" style="gap:6px"><button class="pm-icbtn" onclick="nav('inbox')" aria-label="Messages">${ICONS.bell}${unread ? `<i class="dot"></i>` : ""}</button><button class="av-btn" onclick="nav('moi')" aria-label="Moi">${avatar(u,34,17)}</button></div></div>
+    <div class="pm-brand"><div class="pm-word">My<em>Glow</em></div><svg class="pm-swash" viewBox="0 0 200 14" aria-hidden="true"><path d="M8 9c40-7 110-9 184-2" fill="none" stroke="url(#pmg)" stroke-width="3" stroke-linecap="round"/><defs><linearGradient id="pmg" x1="0" x2="1"><stop offset="0" stop-color="#B8893E"/><stop offset=".5" stop-color="#E7C98A"/><stop offset="1" stop-color="#B8893E"/></linearGradient></defs></svg>
+      <p class="pm-tag">${u.prenom ? "Bonjour " + esc(u.prenom) : "Ton espace bien-être"}</p><span class="pm-rule"></span></div>
+    <div class="pm-grid">${PM_TILES.map(([t, go, k]) => `<button class="pm-tile pm-${k}" onclick="${go}">${t}</button>`).join("")}</div>
     ${focus}
-    <div class="pm-label">Explorer</div>
-    <div class="pm-list">${PM_UNIV.map(([ic,t,d,go]) => pmRow(ic,t,d,go)).join("")}</div>
     <button class="pm-link" onclick="nav('resultats')">Voir les résultats de nos clientes</button>`;
 };
 // Les avant/après ont leur propre page, plus de carrousel sur l'accueil
