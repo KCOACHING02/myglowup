@@ -678,6 +678,10 @@ button,a{-webkit-tap-highlight-color:transparent}
 .sc-sp-ph{height:118px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden}.sc-sp-ph img{width:100%;height:100%;object-fit:contain}
 .sc-sp-t{padding:8px 2px 0;flex:1}.sc-sp-t small{display:block;color:#D4AF37;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}.sc-sp-t b{display:block;font-size:13px;line-height:1.25}.sc-sp-t span{display:block;font-size:11px;color:#8E9A93;margin-top:2px}
 .sc-sp-go{margin-top:10px;text-align:center;background:#D4AF37;color:#0D1411;border-radius:99px;padding:8px;font-size:12px;font-weight:700}
+.theme.wide{grid-column:1/-1;height:150px}
+.theme.wide .theme-t b{font-size:19px;max-width:60%}
+.tile-ill{position:absolute;right:10px;bottom:10px;width:84px;height:84px}.tile-ill svg{width:100%;height:100%;display:block}
+.theme.wide .tile-ill{width:110px;height:110px;right:18px;bottom:20px}
 </style>
 </head>
 <body>
@@ -3529,7 +3533,7 @@ function openAccount(why, then){
    <label class="f" for="acP">Ton prénom</label><input id="acP" class="inp" autocomplete="given-name" value="${esc(u.prenom || "")}" placeholder="Sarah">
    <label class="f" for="suE">E-mail</label><input id="suE" class="inp" type="email" autocomplete="email" placeholder="prenom@exemple.fr">
    <label class="f" for="suP">Mot de passe (8 caractères minimum)</label><input id="suP" class="inp" type="password" autocomplete="new-password">
-   <label class="row" style="gap:10px;margin-top:14px;align-items:flex-start;font-size:13px"><input id="suC" type="checkbox" style="margin-top:3px"><span>J'accepte la <a href="confidentialite.html" target="_blank" rel="noopener" style="color:#1E7A4F;font-weight:600">politique de confidentialité</a> et l'enregistrement de mes données bien-être (habitudes, poids…) pour personnaliser mes conseils.</span></label>
+   <label class="row" style="gap:10px;margin-top:14px;align-items:flex-start;font-size:13px"><input id="suC" type="checkbox" style="margin-top:3px"><span>J'accepte la <a href="/confidentialite.html" target="_blank" rel="noopener" style="color:#1E7A4F;font-weight:600">politique de confidentialité</a> et l'enregistrement de mes données bien-être (habitudes, poids…) pour personnaliser mes conseils.</span></label>
    <label class="row" style="gap:10px;margin-top:10px;align-items:flex-start;font-size:13px"><input id="suM" type="checkbox" style="margin-top:3px"><span>Je veux bien recevoir les conseils et offres de mon conseiller (facultatif).</span></label>
    <p id="authErr" class="small hidden" style="color:var(--danger);margin-top:12px"></p>
    <button id="suBtn" class="btn block" style="margin-top:16px" onclick="doSignupGuest()">Créer mon espace</button>
@@ -3789,8 +3793,8 @@ const BA = [
 ];
 const BA_NOTE = "Résultats individuels, obtenus avec une alimentation équilibrée et de l'activité physique. Ils peuvent varier d'une personne à l'autre.";
 function baRow(filter){
-  let L = BA.filter(b => !filter || b.p === filter);
-  if(!filter){ const ord = ["pulse","bao","gen3"]; L = L.slice().sort((a,b) => ord.indexOf(a.p) - ord.indexOf(b.p)); }
+  let L = BA.filter(b => !filter || [].concat(filter).includes(b.p));
+  if(!filter || Array.isArray(filter)){ const ord = ["pulse","bao","gen3"]; L = L.slice().sort((a,b) => ord.indexOf(a.p) - ord.indexOf(b.p)); }
   if(!L.length) return "";
   return `<div class="carousel ba-row">${L.map(b => `<button class="ba" onclick="openBA('${b.id}')"><img src="${b.img}-s.webp" alt="Avant / après · ${esc(b.l || b.d)}" loading="lazy"></button>`).join("")}</div><p class="tiny muted" style="margin-top:6px">${BA_NOTE}</p>`;
 }
@@ -3931,7 +3935,7 @@ renderUniv = function(){
   const u = me(), X = NEEDS[univKey] || NEEDS.poids; let n = 0; const N = () => ++n;
   const prods = X.products.map(P).filter(p => p && eligible(p, u)).slice(0,3);
   const row = ([k,ic,l,d,act]) => `<button class="tool-row" onclick="${act || `nav('${k}')`}"><span class="tool-ic">${ic}</span><span style="flex:1;min-width:0"><b>${l}</b><span>${esc(d)}</span></span><span class="muted">›</span></button>`;
-  const prog = X.prog ? progOfferCard(X.prog) : X.prog21 ? [].concat(X.prog21).map(prog21Card).join("") : "";
+  const prog = X.prog ? [].concat(X.prog).map(progOfferCard).join("") : X.prog21 ? [].concat(X.prog21).map(prog21Card).join("") : "";
   const pack = univKey === "poids" && eligible(P("pulse"),u) && !cautious(P("pulse"),u) ? `<button class="tool-row" style="background:var(--card);border-radius:18px;margin-top:10px;box-shadow:var(--shadow)" onclick="pulsePack()"><span class="tool-ic">${pimg(P("pulse"),36)}</span><span style="flex:1;min-width:0"><b>Pack 3 semaines Café PULSE</b><span>3 boîtes : tout le programme sans interruption</span></span><span class="muted">›</span></button>` : "";
   const ba = X.ba ? baRow(X.ba) : "";
   return `<button class="back" onclick="goBack()">${ICONS.back} Retour</button>
@@ -3941,7 +3945,7 @@ renderUniv = function(){
      if(k === "outils" && X.toolGroups) return `<h3 class="need-h"><span>${N()}</span>Tes outils</h3>` + X.toolGroups.map(([g,L]) => `<div class="tool-sub">${g}</div><div class="tool-grid">${L.map(([v,ic,l,d,act]) => `<button class="tool-tile" onclick="${act || `nav('${v}')`}"><span class="tt-ic">${ic}</span><b>${l}</b><span>${esc(d)}</span></button>`).join("")}</div>`).join("");
      if(k === "outils") return X.toolGrid ? `<h3 class="need-h"><span>${N()}</span>Tes outils</h3><div class="tool-grid">${X.tools.map(([v,ic,l,d,act]) => `<button class="tool-tile" onclick="${act || `nav('${v}')`}"><span class="tt-ic">${ic}</span><b>${l}</b><span>${esc(d)}</span></button>`).join("")}</div>` : `<h3 class="need-h"><span>${N()}</span>Les outils</h3><div class="tool-list">${X.tools.map(row).join("")}</div>`;
      if(k === "produits") return prods.length ? `<h3 class="need-h"><span>${N()}</span>${X.toolGrid ? "Pour t'accompagner" : "Les produits"}</h3><div class="${prods.length > 2 ? "carousel pc-row" : "shop-grid"}">${prods.map(prodCard).join("")}</div>${pack}` : "";
-     if(k === "prog") return prog ? `<h3 class="need-h"><span>${N()}</span>${X.prog ? "Le programme offert" : [].concat(X.prog21).length > 1 ? "Les programmes gratuits" : "Le programme"}</h3>${prog}` : "";
+     if(k === "prog") return prog ? `<h3 class="need-h"><span>${N()}</span>${X.prog ? ([].concat(X.prog).length > 1 ? "Les programmes offerts" : "Le programme offert") : [].concat(X.prog21).length > 1 ? "Les programmes gratuits" : "Le programme"}</h3>${prog}` : "";
      if(k === "ba") return ba ? `<h3 class="need-h"><span>${N()}</span>Nos avant/après</h3>${ba}` : "";
      if(k === "tips") return `<h3 class="need-h"><span>${N()}</span>Nos conseils</h3><div class="tool-list">${X.tips().slice(0,5).map(t => `<div class="tip-row"><span>${X.ic}</span><p>${esc(t)}</p></div>`).join("")}</div>`;
      return ""; }).join("")}
@@ -5342,6 +5346,45 @@ const SHOP_BASE = () => `https://shop.jifu.com/fr/fr/${encodeURIComponent((DB &&
   if(typeof SC_LBL !== "undefined") Object.assign(SC_LBL, { glocleanser:"Nettoyant · STM SKIN", gloserum:"Sérum · STM SKIN", glonight:"Crème de nuit · STM SKIN", gloeye:"Crème de jour · STM SKIN" });
   if(typeof SC_ORDER !== "undefined"){ SC_ORDER.splice(0, SC_ORDER.length, "pulse","bao","gen3","liv","stm","stmomg","stmskin","gloserum","glocleanser","gloeye","glonight","wav","stm3d"); }
 })();
+</script>
+<script>
+/* =========================================================
+   Accueil v6 : 5 tuiles sans photos de produits,
+   « Perte de poids & ventre plat » réunis en une seule page
+   ========================================================= */
+const _ventreTools = (NEEDS.ventre.toolGroups || []).reduce((a, g) => a.concat(g[1]), []);
+const _tool = k => _ventreTools.find(t => t[0] === k || (t[4] || "").includes(k));
+Object.assign(NEEDS.poids, {
+  name:"Perte de poids & ventre plat", ic:"🌿", g:"linear-gradient(160deg,#E7F3EA,#C9DBFB)", fg:"#14532D",
+  intro:"Manger mieux, dégonfler, suivre tes progrès : tous tes outils au même endroit.",
+  products:["pulse","bao"], prog:["pulse","vp"], ba:["pulse","bao"], toolGrid:true,
+  order:["outils","prog","ba","tips","lire","produits"],
+  tips:() => TIPS.poids.slice(0,3).concat(TIPS_VENTRE.map(t => t[1]).slice(0,2)),
+  toolGroups:[
+    ["Mieux manger", [["metabo","🔥","Mon calcul métabolique","Ce qu'il te faut chaque jour."],["repas","🍲","Que manger ce soir ?","Un plat léger selon ton temps."],["petitdej","🥣","Petit-déj rassasiant","Des idées qui tiennent jusqu'à midi."],["lent","🍽️","Je mange lentement","Un minuteur de 20 minutes."]]],
+    ["Suivre mes progrès", [["poids","📉","Mon poids","Ta courbe, semaine après semaine."],["taille","📏","Mon tour de taille","Une mesure par semaine."]]],
+    ["Mon ventre", [["vquiz","💡","Pourquoi mon ventre gonfle ?","5 questions, des pistes pour toi."],["vjournal","📝","Mon journal du ventre","10 secondes le soir."],["aliments","🥦","Les aliments qui gonflent","Quoi garder, quoi remplacer."],["","🤲","L'automassage du ventre","3 minutes guidées.","startSession('massage')"]]]
+  ]
+});
+NEEDS.ventre = NEEDS.poids;
+if(typeof NEED_BOOKS !== "undefined") NEED_BOOKS.poids = ["poids","fringales","ventre7"];
+const _openUniv6 = openUniv;
+openUniv = function(k){ return _openUniv6(k === "ventre" ? "poids" : k); };
+
+const BAG_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="62" r="52" fill="#CFE3F7"/><path d="M34 46h52l6 50a6 6 0 0 1-6 7H34a6 6 0 0 1-6-7z" fill="#fff" stroke="#121614" stroke-width="3" stroke-linejoin="round"/><path d="M46 52V40a14 14 0 0 1 28 0v12" fill="none" stroke="#121614" stroke-width="3.5" stroke-linecap="round"/><circle cx="46" cy="54" r="3" fill="#1E7A4F"/><circle cx="74" cy="54" r="3" fill="#1E7A4F"/><path d="M60 70c-6-6-14 2-8 8l8 7 8-7c6-6-2-14-8-8z" fill="#E4574A"/></svg>`;
+const HOME6 = [
+  { name:"Perte de poids & ventre plat", bg:"#DCEFE2", fg:"#14532D", ill:"scale", go:"openUniv('poids')", wide:true },
+  { name:"Beauté", bg:"#FFE1D6", fg:"#9A3412", ill:"face", go:"openUniv('beaute')" },
+  { name:"Sommeil & énergie", bg:"#E8E2F7", fg:"#4C3A8A", ill:"moon", go:"openUniv('forme')" },
+  { name:"Ebooks", bg:"#FCE7D9", fg:"#8A3B12", book:true, go:"nav('ebooks')" },
+  { name:"La boutique", bg:"#E3EEF7", fg:"#1E4A6B", svg:BAG_SVG, go:"nav('boutique')" }
+];
+homeTile = function(t){
+  const art = t.book ? `<span class="tile-books"><i style="background:#E8B9A0"></i><i style="background:#9FC9B0"></i><i style="background:#F2D27F"></i></span>`
+    : `<span class="tile-ill">${t.svg || (typeof EB_ILL !== "undefined" ? EB_ILL[t.ill] : "") || ""}</span>`;
+  return `<button class="theme ${t.wide ? "wide" : ""}" style="background:${t.bg}" onclick="${t.go}"><span class="theme-t" style="color:${t.fg}"><b>${t.name}</b></span>${art}</button>`;
+};
+HOME_TILES.splice(0, HOME_TILES.length, ...HOME6);
 </script>
 <script>
 /* =========================================================
