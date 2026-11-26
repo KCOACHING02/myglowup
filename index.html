@@ -5405,7 +5405,7 @@ const HOME6 = [
   { name:"Perte de poids & ventre plat", bg:"#DCEFE2", fg:"#fff", photo:"img/tile-poids.webp", go:"openUniv('poids')", wide:true },
   { name:"Beauté", bg:"#E9DDD3", fg:"#fff", photo:"img/tile-beaute.webp", go:"openUniv('beaute')" },
   { name:"Sommeil & énergie", bg:"#E8E2F7", fg:"#fff", photo:"img/tile-sommeil.webp", go:"openUniv('forme')" },
-  { name:"Ebooks", bg:"#FCE7D9", fg:"#8A3B12", book:true, go:"nav('ebooks')" },
+  { name:"Ebooks", bg:"#3A2A1E", fg:"#fff", photo:"img/tile-ebooks.webp", go:"nav('ebooks')" },
   { name:"La boutique", bg:"#E3EEF7", fg:"#1E4A6B", svg:BAG_SVG, go:"nav('boutique')" }
 ];
 homeTile = function(t){
@@ -5500,7 +5500,7 @@ async function drawProgress(){
   x.fillStyle = "rgba(255,255,255,.92)"; x.beginPath(); x.arc(W/2, 720, 250, 0, 7); x.fill();
   x.strokeStyle = "rgba(255,255,255,.55)"; x.lineWidth = 18; x.beginPath(); x.arc(W/2, 720, 285, 0, 7); x.stroke();
   x.fillStyle = PLUM; x.font = cfont(800,200); ctext(x, String(s.streak), W/2, 770);
-  x.font = cfont(600,42); x.fillStyle = "#8A3B62"; ctext(x, s.streak > 1 ? "jours d'affilée 🔥" : "jour suivi 🔥", W/2, 850);
+  x.font = cfont(600,42); x.fillStyle = "#8A3B62"; ctext(x, s.streak > 1 ? "jours d'affilée 🔥" : "jour d'affilée 🔥", W/2, 850);
   // tuiles
   const tiles = [["🌱", s.pts, "graines"], ["🏅", s.badges, s.badges > 1 ? "badges" : "badge"], ["📅", s.days, "jours de parcours"],
     pcOpts.kg && s.kg > 0 ? ["⚖️", "−" + fkg(s.kg), "kilos en moins"] : ["💧", s.eau ? fkg(s.eau) : "–", "verres d'eau / jour"]];
