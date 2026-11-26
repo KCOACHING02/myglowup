@@ -734,6 +734,26 @@ button,a{-webkit-tap-highlight-color:transparent}
 .pw-ph{height:120px;border-radius:14px;background:linear-gradient(160deg,#F3F8F4,#E3EFE7);display:grid;place-items:center;overflow:hidden;margin-bottom:6px}.pw-ph img{max-width:90%;max-height:108px;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.15))}
 .pw-card b{font-size:14px;line-height:1.25}.pw-card small{font-size:12px;color:var(--muted);line-height:1.3;min-height:31px}
 .pw-go{margin-top:6px;align-self:flex-start;background:#121614;color:#fff;border-radius:10px;padding:7px 11px;font-size:12.5px;font-weight:600}
+/* --- Rubriques des pages besoins --- */
+.ns{--c:#1E7A4F;--soft:#E6F4EA}
+.ns-outils{--c:#1E7A4F;--soft:#E6F4EA}.ns-produits{--c:#A67C2E;--soft:#F6EEDC}.ns-prog{--c:#C2690A;--soft:#FFF1DD}
+.ns-ba{--c:#C93C7C;--soft:#FCE6EF}.ns-tips{--c:#2F5FC4;--soft:#E5EEFC}.ns-lire{--c:#A5551F;--soft:#FAEBDD}
+.ns-h{display:flex;align-items:center;gap:12px;margin:0 0 12px}.ns-h h3{margin:0;font-size:20px;letter-spacing:-.02em;line-height:1.2}
+.ns-ic{display:none}.ns-over{display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c);margin-bottom:3px}
+/* D : magazine épuré */
+.ns-D .ns{margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.ns-D .ns:first-of-type{border-top:none;padding-top:4px;margin-top:20px}
+.ns-D .ns-h h3::after{content:"";display:block;width:28px;height:3px;border-radius:3px;background:var(--c);margin-top:8px}
+/* E : panneaux blancs */
+.ns-E .ns{background:var(--card);border-radius:28px;padding:18px 16px 20px;margin:16px -6px 0;box-shadow:0 10px 30px -18px rgba(18,22,20,.35)}
+.ns-E .ns .tool-tile,.ns-E .ns .pw-card,.ns-E .ns .tool-list{box-shadow:none;border:1px solid var(--line)}
+/* F : pastille douce */
+.ns-F .ns{margin-top:30px}
+.ns-F .ns-ic{display:grid;width:46px;height:46px;border-radius:16px;place-items:center;font-size:22px;background:var(--soft);flex:none}
+.ns-F .ns-over{display:none}.ns-F .ns-h h3{font-size:20px}
+.ns-F .ns-h div::after{content:attr(data-x)}
+.ns-E .ns{border:1.5px solid var(--c);border-color:color-mix(in srgb,var(--c) 38%,#fff);box-shadow:none;margin:18px 0 0}
+.ns-E .ns{overflow:hidden}
 </style>
 </head>
 <body>
@@ -5747,7 +5767,7 @@ document.addEventListener("DOMContentLoaded", () => {
    Perte de poids épurée : calcul métabolique, ma to-do du jour, quiz perte de poids
    ========================================================= */
 NEEDS.poids.intro = "Trois outils simples pour avancer, un jour après l'autre.";
-NEEDS.poids.toolGroups = [["Pour avancer", [
+NEEDS.poids.toolGroups = [["", [
   ["pquiz",'<span class="tt-photo tt-quiz" style="background-image:url(img/tool-quiz.webp)"></span>',"Le quiz perte de poids","8 questions pour trouver ce qui te freine."],
   ["metabo",'<span class="tt-photo" style="background-image:url(img/tool-metabo.webp)"></span>',"Mon calcul métabolique","Ce qu'il te faut chaque jour."],
   ["todop",'<span class="tt-photo" style="background-image:url(img/tool-todo.webp)"></span>',"Ma to-do perte de poids","Les bons gestes du jour, à cocher."]
@@ -5884,12 +5904,46 @@ renderUniv = function(){
   const u = me(), cards = pwCards(u);
   if(!cards.length) return h;
   const m = h.match(/<h3 class="need-h"><span>(\d+)<\/span>Pour t'accompagner<\/h3>[\s\S]*?(?=<h3 class="need-h">|$)/);
-  const sec = `<div class="pw-sec"><h3 class="need-h" style="margin-bottom:4px">${m ? `<span>${m[1]}</span>` : ""}Les produits JIFU pour t'aider</h3><p class="small muted" style="margin:0 0 10px">Café PULSE, BAO+ et les packs de la boutique.</p>
-    <div class="pw-row" id="pwRow" ontouchstart="this._hold=1" ontouchend="setTimeout(()=>this._hold=0,4000)" onmouseenter="this._hold=1" onmouseleave="this._hold=0">${cards.join("")}</div></div>`;
+  const sec = `<h3 class="need-h">${m ? `<span>${m[1]}</span>` : ""}Les produits JIFU pour t'aider</h3>
+    <div class="pw-row" id="pwRow" ontouchstart="this._hold=1" ontouchend="setTimeout(()=>this._hold=0,4000)" onmouseenter="this._hold=1" onmouseleave="this._hold=0">${cards.join("")}</div>`;
   setTimeout(pwAuto, 300);
   // la section « produits » d'origine est remplacée par le carrousel qui défile
   return m ? h.replace(m[0], sec) : h.replace(/(<h3 class="need-h"><span>\d+<\/span>Nos avant\/après)/, sec + "$1");
 };
+</script>
+<script>
+/* =========================================================
+   Rubriques des pages besoins : chaque rubrique a sa couleur, son icône et son sous-titre
+   ========================================================= */
+let NS_STYLE = "E";
+const NS_DEF = [
+  [/^Tes outils|^Les outils/, "outils", "🧰", "Tes outils", "Pour agir au quotidien", "Outils"],
+  [/^Les produits JIFU|^Pour t'accompagner|^Les produits/, "produits", "🛍️", "La boutique", "Les produits JIFU pour t'aider", "Boutique"],
+  [/programme/i, "prog", "🎁", null, "Offerts avec tes produits", "Programmes"],
+  [/^Nos avant\/après/, "ba", "📸", "Avant / après", "Elles l'ont fait, toi aussi", "Avant / après"],
+  [/^Nos conseils/, "tips", "💡", "Nos conseils", "Les bons réflexes", "Conseils"],
+  [/^À lire/, "lire", "📚", "À lire", "Les ebooks sur ce thème", "À lire"]
+];
+function nsWrap(h){
+  const parts = h.split(/(?=<h3 class="need-h"[ >])/), out = [parts[0]], chips = [];
+  parts.slice(1).forEach(p => {
+    const m = p.match(/^<h3 class="need-h"[^>]*>(?:<span>\d+<\/span>)?([\s\S]*?)<\/h3>/); if(!m){ out.push(p); return; }
+    const title = m[1].replace(/<[^>]+>/g, "").trim(), d = NS_DEF.find(x => x[0].test(title)) || [null, "autre", "✨", title, ""];
+    let body = p.slice(m[0].length), tail = "";
+    const q = body.search(/<div class="card" style="margin-top:18px;text-align:center"><b>Une question/);
+    if(q >= 0){ tail = body.slice(q); body = body.slice(0, q); }
+    body = body.replace(/^<p class="small muted" style="margin:0 0 10px">[^<]*<\/p>/, "");
+    const t = d[3] || title;
+    chips.push(`<button onclick="nsGo('${d[1]}')"><span>${d[2]}</span>${esc(t)}</button>`);
+    out.push(`<section class="ns ns-${d[1]}" id="ns-${d[1]}"><div class="ns-h"><span class="ns-ic">${d[2]}</span><div><small class="ns-over">${d[2]} ${esc(d[5] || t)}</small><h3>${esc(d[4] || t)}</h3></div></div>${body}</section>${tail}`);
+  });
+  let html = out.join("");
+  if(NS_STYLE === "C" && chips.length > 1) html = html.replace(/(<div class="univ-hero uh-c"[\s\S]*?<\/div><\/div>)/, `$1<nav class="ns-nav">${chips.join("")}</nav>`);
+  return `<div class="ns-wrap ns-${NS_STYLE}">${html}</div>`;
+}
+function nsGo(k){ const e = $("ns-" + k), s = $("screen"); if(e && s) s.scrollTo({ top: e.offsetTop - 70, behavior: "smooth" }); }
+const _renderUnivNS = renderUniv;
+renderUniv = function(){ return nsWrap(_renderUnivNS.apply(this, arguments)); };
 </script>
 <script>
 /* =========================================================
