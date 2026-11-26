@@ -754,6 +754,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 .ns-F .ns-h div::after{content:attr(data-x)}
 .ns-E .ns{border:1.5px solid var(--c);border-color:color-mix(in srgb,var(--c) 38%,#fff);box-shadow:none;margin:18px 0 0}
 .ns-E .ns{overflow:hidden}
+.tile-over{position:absolute;left:49%;bottom:42.5%;height:25%;transform:translateX(-50%);filter:drop-shadow(0 6px 8px rgba(0,0,0,.18));z-index:0}.theme.photo .theme-t{z-index:1}
 </style>
 </head>
 <body>
@@ -5449,10 +5450,10 @@ const HOME6 = [
   { name:"Beauté", bg:"#E9DDD3", fg:"#fff", photo:"img/tile-beaute2.webp", go:"openUniv('beaute')" },
   { name:"Sommeil & énergie", bg:"#E8E2F7", fg:"#fff", photo:"img/tile-sommeil.webp", go:"openUniv('forme')" },
   { name:"Ebooks", bg:"#3A2A1E", fg:"#fff", photo:"img/tile-ebooks.webp", go:"nav('ebooks')" },
-  { name:"La boutique", bg:"#FBB1CE", fg:"#fff", photo:"img/tile-boutique.webp", go:"nav('boutique')" }
+  { name:"La boutique", bg:"#FBB1CE", fg:"#fff", photo:"img/tile-boutique2.webp", over:"https://res.cloudinary.com/thqvfh9m/image/upload/e_trim,h_300,f_png/shop/products/bao-1", go:"nav('boutique')" }
 ];
 homeTile = function(t){
-  if(t.photo) return `<button class="theme photo${t.wide ? " wide" : ""}" style="background:${t.bg} url('${t.photo}') center/cover" onclick="${t.go}" aria-label="${t.name}"><span class="theme-t"><b>${t.name}</b></span></button>`;
+  if(t.photo) return `<button class="theme photo${t.wide ? " wide" : ""}" style="background:${t.bg} url('${t.photo}') center/cover" onclick="${t.go}" aria-label="${t.name}">${t.over ? `<img class="tile-over" src="${t.over}" alt="" onerror="this.remove()">` : ""}<span class="theme-t"><b>${t.name}</b></span></button>`;
   const art = t.book ? `<span class="tile-books"><i style="background:#E8B9A0"></i><i style="background:#9FC9B0"></i><i style="background:#F2D27F"></i></span>`
     : `<span class="tile-ill">${t.svg || (typeof EB_ILL !== "undefined" ? EB_ILL[t.ill] : "") || ""}</span>`;
   return `<button class="theme ${t.wide ? "wide" : ""}" style="background:${t.bg}" onclick="${t.go}"><span class="theme-t" style="color:${t.fg}"><b>${t.name}</b></span>${art}</button>`;
