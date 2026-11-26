@@ -836,6 +836,41 @@ button,a{-webkit-tap-highlight-color:transparent}
 .pm .nav button span{color:var(--brand)}
 .pm .btn{background:var(--brand)}.pm .btn.line{background:none;border-color:var(--brand);color:var(--brand)}
 .pm .av-btn>*{background:#EFE6D6!important;color:var(--brand)!important;border:1px solid var(--gold-l)}.pm .nav-dot{background:var(--gold)!important}.pm .pm-pill{background:#EFE6D6;color:var(--brand)}
+
+/* ---- Boutique aux couleurs de la charte ---- */
+.pm .shopdark,.pm .phone.shopdark #screen{background:var(--bg)}
+.pm .sc{color:var(--brand)}
+.pm .sc-top b{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:22px}.pm .sc-top span{color:var(--muted)}
+.pm .sc-slide{background:radial-gradient(120% 90% at 30% 15%,#3C735C,#1F4A3A 55%,#173A2D) padding-box,linear-gradient(135deg,#F1DCA0,#B8893E 45%,#E8CF94 75%,#A97B32) border-box;border:2px solid transparent}
+.pm .sc-slide h2{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-.02em;color:#F6EFE2}.pm .sc-slide p{color:#D8E2DA}.pm .sc-slide small{color:var(--gold-l)}
+.pm .sc-btn{background:linear-gradient(120deg,#C9A15A,#E8CF94);color:#1D3B30}
+.pm .sc-dots i{background:#D9CDB8}.pm .sc-dots i.on{background:var(--gold)}
+.pm .sc-chips button{border-color:var(--line);color:var(--brand);background:var(--card)}.pm .sc-chips button.on{background:var(--brand);color:#F6EFE2;border-color:var(--brand)}
+.pm .sc-h{font-family:"Fraunces",Georgia,serif;font-weight:400;color:var(--brand)}
+.pm .sc-card,.pm .sc-pack,.pm .sc-sp{background:var(--card);border:1px solid var(--line);color:var(--brand)}
+.pm .sc-card small,.pm .sc-sp-t span,.pm .sc-pack span{color:var(--muted)}
+.pm .sc-ph{background:radial-gradient(circle,#FFFDF8,#EFE6D6 75%)}.pm .sc-ph img{filter:drop-shadow(0 10px 14px rgba(60,45,20,.25))}
+.pm .sc-gift{background:rgba(194,154,85,.16);color:#8A6A2E}
+.pm .sc-go{border-color:var(--brand);color:var(--brand)}.pm .sc-cart{background:var(--brand);color:#F6EFE2}
+.pm .sc-pack small,.pm .sc-arrow,.pm .sc-more{color:var(--gold)}
+.pm .sc-help{background:var(--card);border:1.5px solid var(--gold-l);color:var(--brand)}.pm .sc-help p{color:var(--muted)}
+.pm .sc-sp-go{background:var(--brand);color:#F6EFE2}.pm .sc-muted,.pm .sc-legal{color:var(--muted)}
+.pm .shopdark .nav{background:#F8F2E8}
+/* ---- Écrans des outils ---- */
+.pm .univ-hero{border:1.5px solid var(--gold-l)!important;border-radius:24px}
+.pm .univ-hero .h-title,.pm .univ-hero h1{color:var(--brand)!important;font-family:"Fraunces",Georgia,serif;font-weight:400}
+.pm .vq-opt{background:var(--card);border:1.5px solid var(--line)}.pm .vq-opt.on{border-color:var(--brand);background:#EFE6D6}
+.pm .vq-bar{background:#E8DDCB}.pm .vq-bar i{background:var(--gold)}
+.pm .chip{background:#EFE6D6;color:var(--brand)}
+.pm .td-day.ok i{background:var(--brand)}.pm .td-day.mid i{background:#C9D6CC}
+.pm .tool-sub,.pm .tool-sec{color:var(--gold)}
+.pm .tool-list,.pm .tool-row{background:var(--card)}
+.pm .tool-ic,.pm .tt-ic{background:#EFE6D6}
+.pm .need-h span{background:var(--brand)}
+.pm .ba-row .ba{border-radius:18px;overflow:hidden;border:1.5px solid var(--gold-l)}
+.pm .sc-top b{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:24px;letter-spacing:-.01em!important;text-transform:none!important;color:var(--brand)!important}
+.pm .sc-gift{background:#FBF7F0!important;backdrop-filter:none;color:#7A5A22!important;border:1px solid var(--gold-l);font-weight:600}
+.pm .td-top circle:first-of-type{stroke:#E8DDCB}.pm .td-top circle+circle{stroke:var(--brand)}
 </style>
 </head>
 <body>
@@ -6092,7 +6127,7 @@ renderHome = function(){
       <p class="pm-tag">${u.prenom ? "Bonjour " + esc(u.prenom) : "Ton espace bien-être"}</p><span class="pm-rule"></span></div>
     <div class="pm-grid">${PM_TILES.map(([t, go, k]) => `<button class="pm-tile pm-${k}" onclick="${go}">${t}</button>`).join("")}</div>
     ${focus}
-    <button class="pm-link" onclick="nav('resultats')">Voir les résultats de nos clientes</button>`;
+    ${(() => { const ba = baRow(); if(ba && typeof baAuto === "function") setTimeout(baAuto, 60); return ba ? `<div class="pm-label">Avant / après</div>${ba}` : ""; })()}`;
 };
 // Les avant/après ont leur propre page, plus de carrousel sur l'accueil
 VX.resultats = function(){
